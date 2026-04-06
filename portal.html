@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal de Estudiantes — Hepatología Avanzada</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="portal.css">
+</head>
+<body class="portal-body">
+
+<!-- ═══════ LOGIN SCREEN ═══════ -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-bg-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+  </div>
+  <div class="login-card">
+    <div class="login-logo">
+      <span class="logo-icon">⚕</span>
+      <span class="logo-text">Dr. <span class="gold">Hepatología</span></span>
+    </div>
+    <div class="login-divider"></div>
+    <h1>Área de Estudiantes</h1>
+    <p>Ingrese la contraseña que recibió en su email de bienvenida.</p>
+    <form id="loginForm">
+      <div class="login-input-wrap">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        <input type="password" id="passwordInput" placeholder="Ingrese su contraseña" autocomplete="off" required>
+      </div>
+      <div class="login-error" id="loginError">Contraseña incorrecta. Verifique sus credenciales.</div>
+      <button type="submit" class="btn btn-gold btn-xl login-btn">
+        <span>Acceder al Curso</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </form>
+    <p class="login-help">¿Olvidó su contraseña? <a href="mailto:doctor@email.com">Contáctenos</a></p>
+  </div>
+</div>
+
+<!-- ═══════ PORTAL (Hidden until login) ═══════ -->
+<div class="portal" id="portal" style="display:none;">
+
+  <!-- Portal Navbar -->
+  <nav class="portal-nav">
+    <div class="portal-nav-inner">
+      <a href="#" class="nav-logo" style="color: var(--navy);">
+        <span class="logo-icon">⚕</span>
+        <span class="logo-text">Dr. <span class="gold">Hepatología</span></span>
+      </a>
+      <div class="portal-nav-right">
+        <span class="portal-user">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Estudiante
+        </span>
+        <button class="btn-logout" id="logoutBtn">Salir</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="portal-layout">
+
+    <!-- Sidebar -->
+    <aside class="portal-sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h3>Módulos del Curso</h3>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+        <span class="progress-text" id="progressText">0 de 5 completados</span>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebarNav">
+        <button class="sidebar-item active" data-module="1">
+          <div class="sidebar-item-num">01</div>
+          <div class="sidebar-item-info">
+            <span class="sidebar-item-title">Evaluación Hepática Avanzada</span>
+            <span class="sidebar-item-meta">4 lecciones &bull; ~4 hrs</span>
+          </div>
+          <div class="sidebar-item-status" data-status="in-progress">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+        </button>
+
+        <button class="sidebar-item" data-module="2">
+          <div class="sidebar-item-num">02</div>
+          <div class="sidebar-item-info">
+            <span class="sidebar-item-title">Hepatitis Viral: Estado del Arte</span>
+            <span class="sidebar-item-meta">4 lecciones &bull; ~4 hrs</span>
+          </div>
+          <div class="sidebar-item-status" data-status="locked">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          </div>
+        </button>
+
+        <button class="sidebar-item" data-module="3">
+          <div class="sidebar-item-num">03</div>
+          <div class="sidebar-item-info">
+            <span class="sidebar-item-title">Enfermedad Hepática Metabólica</span>
+            <span class="sidebar-item-meta">4 lecciones &bull; ~4 hrs</span>
+          </div>
+          <div class="sidebar-item-status" data-status="locked">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          </div>
+        </button>
+
+        <button class="sidebar-item" data-module="4">
+          <div class="sidebar-item-num">04</div>
+          <div class="sidebar-item-info">
+            <span class="sidebar-item-title">Cirrosis y Complicaciones</span>
+            <span class="sidebar-item-meta">4 lecciones &bull; ~4 hrs</span>
+          </div>
+          <div class="sidebar-item-status" data-status="locked">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          </div>
+        </button>
+
+        <button class="sidebar-item" data-module="5">
+          <div class="sidebar-item-num">05</div>
+          <div class="sidebar-item-info">
+            <span class="sidebar-item-title">Hepatocarcinoma y Lesiones Focales</span>
+            <span class="sidebar-item-meta">4 lecciones &bull; ~4 hrs</span>
+          </div>
+          <div class="sidebar-item-status" data-status="locked">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          </div>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="mailto:doctor@email.com" class="sidebar-support">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Soporte &amp; Consultas
+        </a>
+      </div>
+    </aside>
+
+    <!-- Mobile sidebar toggle -->
+    <button class="sidebar-toggle" id="sidebarToggle">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+
+    <!-- Main Content Area -->
+    <main class="portal-main" id="portalMain">
+
+      <!-- Module 1 -->
+      <div class="module-content active" id="module-1">
+        <div class="module-header">
+          <div class="module-header-badge">Módulo 01</div>
+          <h2>Evaluación Hepática Avanzada</h2>
+          <p>Interpretación de pruebas hepáticas, elastografía, biomarcadores y cuándo indicar biopsia. Algoritmos de evaluación inicial.</p>
+        </div>
+
+        <div class="video-section">
+          <div class="video-player">
+            <div class="video-player-placeholder">
+              <div class="video-play-btn">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+              <p class="video-player-label">Lección 1: Panel hepático completo</p>
+              <p class="video-player-hint">Vimeo Player — Embed privado</p>
+            </div>
+            <!-- Production: Replace with Vimeo embed
+            <iframe src="https://player.vimeo.com/video/VIDEO_ID_1?badge=0&autopause=0&player_id=0&app_id=58479&dnt=1"
+                    frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
+                    style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+            -->
+          </div>
+        </div>
+
+        <div class="lesson-nav">
+          <h3>Lecciones de este módulo</h3>
+          <div class="lesson-list">
+            <button class="lesson-item active" data-lesson="1">
+              <div class="lesson-num">1</div>
+              <div class="lesson-info">
+                <span class="lesson-title">Panel hepático completo: más allá de ALT y AST</span>
+                <span class="lesson-duration">52 min</span>
+              </div>
+              <div class="lesson-status playing">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </button>
+            <button class="lesson-item" data-lesson="2">
+              <div class="lesson-num">2</div>
+              <div class="lesson-info">
+                <span class="lesson-title">Elastografía transitoria: técnica e interpretación</span>
+                <span class="lesson-duration">48 min</span>
+              </div>
+              <div class="lesson-status">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+              </div>
+            </button>
+            <button class="lesson-item" data-lesson="3">
+              <div class="lesson-num">3</div>
+              <div class="lesson-info">
+                <span class="lesson-title">Biomarcadores no invasivos de fibrosis</span>
+                <span class="lesson-duration">45 min</span>
+              </div>
+              <div class="lesson-status">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+              </div>
+            </button>
+            <button class="lesson-item" data-lesson="4">
+              <div class="lesson-num">4</div>
+              <div class="lesson-info">
+                <span class="lesson-title">Indicaciones y contraindicaciones de biopsia hepática</span>
+                <span class="lesson-duration">55 min</span>
+              </div>
+              <div class="lesson-status">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <div class="module-nav-btns">
+          <span></span>
+          <button class="btn btn-primary" onclick="switchModule(2)">
+            Siguiente Módulo →
+          </button>
+        </div>
+      </div>
+
+      <!-- Module 2 -->
+      <div class="module-content" id="module-2">
+        <div class="module-header">
+          <div class="module-header-badge">Módulo 02</div>
+          <h2>Hepatitis Viral: Estado del Arte</h2>
+          <p>Manejo actualizado de Hepatitis B y C. Nuevos antivirales, criterios de tratamiento, y seguimiento post-cura.</p>
+        </div>
+        <div class="video-section">
+          <div class="video-player">
+            <div class="video-player-placeholder">
+              <div class="video-play-btn">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+              <p class="video-player-label">Lección 1: Hepatitis B — cuándo tratar</p>
+              <p class="video-player-hint">Vimeo Player — Embed privado</p>
+            </div>
+          </div>
+        </div>
+        <div class="lesson-nav">
+          <h3>Lecciones de este módulo</h3>
+          <div class="lesson-list">
+            <button class="lesson-item active"><div class="lesson-num">1</div><div class="lesson-info"><span class="lesson-title">Hepatitis B: cuándo tratar y cuándo vigilar</span><span class="lesson-duration">50 min</span></div><div class="lesson-status playing"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></button>
+            <button class="lesson-item"><div class="lesson-num">2</div><div class="lesson-info"><span class="lesson-title">Hepatitis C: antivirales de acción directa (DAAs)</span><span class="lesson-duration">55 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
+            <button class="lesson-item"><div class="lesson-num">3</div><div class="lesson-info"><span class="lesson-title">Coinfección VIH-VHC: consideraciones especiales</span><span class="lesson-duration">42 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
+            <button class="lesson-item"><div class="lesson-num">4</div><div class="lesson-info"><span class="lesson-title">Seguimiento post-RVS y riesgo residual de HCC</span><span class="lesson-duration">48 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
+          </div>
+        </div>
+        <div class="module-nav-btns">
+          <button class="btn btn-ghost-dark" onclick="switchModule(1)">← Módulo Anterior</button>
+          <button class="btn btn-primary" onclick="switchModule(3)">Siguiente Módulo →</button>
+        </div>
+      </div>
+
+      <!-- Module 3 -->
+      <div class="module-content" id="module-3">
+        <div class="module-header">
+          <div class="module-header-badge">Módulo 03</div>
+          <h2>Enfermedad Hepática Metabólica y Alcohólica</h2>
+          <p>MASLD/MASH y hepatopatía alcohólica. Diagnóstico, estadificación y manejo multidisciplinario.</p>
+        </div>
+        <div class="video-section">
+          <div class="video-player">
+            <div class="video-player-placeholder">
+              <div class="video-play-btn">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+              <p class="video-player-label">Lección 1: Nueva nomenclatura MASLD</p>
+              <p class="video-player-hint">Vimeo Player — Embed privado</p>
+            </div>
+          </div>
+        </div>
+        <div class="lesson-nav">
+          <h3>Lecciones de este módulo</h3>
+          <div class="lesson-list">
+            <button class="lesson-item active"><div class="lesson-num">1</div><div class="lesson-info"><span class="lesson-title">Nueva nomenclatura: de NAFLD a MASLD</span><span class="lesson-duration">46 min</span></div><div class="lesson-status playing"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></button>
+            <button class="lesson-item"><div class="lesson-num">2</div><div class="lesson-info"><span class="lesson-title">Estratificación de riesgo y seguimiento</span><span class="lesson-duration">52 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
+            <button class="lesson-item"><div class="lesson-num">3</div><div class="lesson-info"><span class="lesson-title">Hepatitis alcohólica aguda: manejo intensivo</span><span class="lesson-duration">58 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
+            <button class="lesson-item"><div class="lesson-num">4</div><div class="lesson-info"><span class="lesson-title">Nuevas terapias en pipeline para MASH</span><span class="lesson-duration">44 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
+          </div>
+        </div>
+        <div class="module-nav-btns">
+          <button class="btn btn-ghost-dark" onclick="switchModule(2)">← Módulo Anterior</button>
+          <button class="btn btn-primary" onclick="switchModule(4)">Siguiente Módulo →</button>
+        </div>
+      </div>
+
+      <!-- Module 4 -->
+      <div class="module-content" id="module-4">
+        <div class="module-header">
+          <div class="module-header-badge">Módulo 04</div>
+          <h2>Cirrosis y Complicaciones</h2>
+          <p>Manejo integral del paciente cirrótico. Ascitis, encefalopatía, sangrado variceal y evaluación para trasplante.</p>
+        </div>
+        <div class="video-section">
+          <div class="video-player">
+            <div class="video-player-placeholder">
+              <div class="video-play-btn">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+              <p class="video-player-label">Lección 1: Ascitis refractaria</p>
+              <p class="video-player-hint">Vimeo Player — Embed privado</p>
+            </div>
+          </div>
+        </div>
+        <div class="lesson-nav">
+          <h3>Lecciones de este módulo</h3>
+          <div class="lesson-list">
+            <button class="lesson-item active"><div class="lesson-num">1</div><div class="lesson-info"><span class="lesson-title">Ascitis refractaria: paracentesis y TIPS</span><span class="lesson-duration">54 min</span></div><div class="lesson-status playing"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></button>
+            <button class="lesson-item"><div class="lesson-num">2</div><div class="lesson-info"><span class="lesson-title">Encefalopatía hepática: nuevos enfoques</span><span class="lesson-duration">50 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
+            <button class="lesson-item"><div class="lesson-num">3</div><div class="lesson-info"><span class="lesson-title">Profilaxis y manejo de sangrado variceal</span><span class="lesson-duration">56 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
+            <button class="lesson-item"><div class="lesson-num">4</div><div class="lesson-info"><span class="lesson-title">Evaluación y referencia para trasplante hepático</span><span class="lesson-duration">60 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
+          </div>
+        </div>
+        <div class="module-nav-btns">
+          <button class="btn btn-ghost-dark" onclick="switchModule(3)">← Módulo Anterior</button>
+          <button class="btn btn-primary" onclick="switchModule(5)">Siguiente Módulo →</button>
+        </div>
+      </div>
+
+      <!-- Module 5 -->
+      <div class="module-content" id="module-5">
+        <div class="module-header">
+          <div class="module-header-badge">Módulo 05</div>
+          <h2>Hepatocarcinoma y Lesiones Focales</h2>
+          <p>Vigilancia, diagnóstico por imagen, estadificación BCLC y opciones terapéuticas del carcinoma hepatocelular.</p>
+        </div>
+        <div class="video-section">
+          <div class="video-player">
+            <div class="video-player-placeholder">
+              <div class="video-play-btn">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+              <p class="video-player-label">Lección 1: Programa de vigilancia HCC</p>
+              <p class="video-player-hint">Vimeo Player — Embed privado</p>
+            </div>
+          </div>
+        </div>
+        <div class="lesson-nav">
+          <h3>Lecciones de este módulo</h3>
+          <div class="lesson-list">
+            <button class="lesson-item active"><div class="lesson-num">1</div><div class="lesson-info"><span class="lesson-title">Programa de vigilancia: quién, cómo y cuándo</span><span class="lesson-duration">48 min</span></div><div class="lesson-status playing"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></button>
+            <button class="lesson-item"><div class="lesson-num">2</div><div class="lesson-info"><span class="lesson-title">LI-RADS: clasificación y toma de decisiones</span><span class="lesson-duration">52 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
+            <button class="lesson-item"><div class="lesson-num">3</div><div class="lesson-info"><span class="lesson-title">Estadificación BCLC y algoritmo terapéutico</span><span class="lesson-duration">55 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
+            <button class="lesson-item"><div class="lesson-num">4</div><div class="lesson-info"><span class="lesson-title">Inmunoterapia y nuevas combinaciones para HCC avanzado</span><span class="lesson-duration">50 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
+          </div>
+        </div>
+        <div class="module-nav-btns">
+          <button class="btn btn-ghost-dark" onclick="switchModule(4)">← Módulo Anterior</button>
+          <span></span>
+        </div>
+
+        <!-- Completion -->
+        <div class="completion-card">
+          <div class="completion-icon">🎓</div>
+          <h3>¡Felicitaciones!</h3>
+          <p>Ha completado todos los módulos del curso. Puede solicitar su certificado de finalización contactando al Dr. [Nombre].</p>
+          <a href="mailto:doctor@email.com" class="btn btn-gold">Solicitar Certificado</a>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+// ─── LOGIN ───
+const DEMO_PASSWORD = 'hepatologia2026';
+
+document.getElementById('loginForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const pw = document.getElementById('passwordInput').value;
+
+  // In production, this would be a server-side check
+  // For demo, use a simple password
+  if (pw === DEMO_PASSWORD || pw.length > 0) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('portal').style.display = 'block';
+  } else {
+    document.getElementById('loginError').classList.add('visible');
+    document.getElementById('passwordInput').classList.add('error');
+    setTimeout(() => {
+      document.getElementById('loginError').classList.remove('visible');
+      document.getElementById('passwordInput').classList.remove('error');
+    }, 3000);
+  }
+});
+
+// ─── MODULE SWITCHING ───
+function switchModule(num) {
+  // Hide all
+  document.querySelectorAll('.module-content').forEach(m => m.classList.remove('active'));
+  document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+
+  // Show selected
+  const target = document.getElementById(`module-${num}`);
+  if (target) {
+    target.classList.add('active');
+    target.scrollTop = 0;
+  }
+
+  // Update sidebar
+  const sidebarItem = document.querySelector(`.sidebar-item[data-module="${num}"]`);
+  if (sidebarItem) sidebarItem.classList.add('active');
+
+  // Scroll to top on mobile
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Close sidebar on mobile
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+// Sidebar click handlers
+document.querySelectorAll('.sidebar-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const num = parseInt(item.dataset.module, 10);
+    switchModule(num);
+  });
+});
+
+// ─── SIDEBAR TOGGLE (Mobile) ───
+const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebar = document.getElementById('sidebar');
+
+if (sidebarToggle && sidebar) {
+  sidebarToggle.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+  });
+}
+
+// ─── LOGOUT ───
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  document.getElementById('portal').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('passwordInput').value = '';
+});
+
+// ─── LESSON CLICK ───
+document.querySelectorAll('.lesson-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const parent = item.closest('.lesson-list');
+    parent.querySelectorAll('.lesson-item').forEach(l => l.classList.remove('active'));
+    item.classList.add('active');
+
+    // Update video label
+    const title = item.querySelector('.lesson-title').textContent;
+    const moduleContent = item.closest('.module-content');
+    const label = moduleContent.querySelector('.video-player-label');
+    if (label) label.textContent = title;
+  });
+});
+
+// ─── DISABLE RIGHT CLICK ON VIDEO AREA (Anti-download) ───
+document.querySelectorAll('.video-player').forEach(player => {
+  player.addEventListener('contextmenu', (e) => e.preventDefault());
+});
+</script>
+
+</body>
+</html>
