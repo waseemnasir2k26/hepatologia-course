@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cómo Funciona el Sistema — Dr. Julio Santiago Marcelo</title>
+<meta name="description" content="Panorama completo del sistema: estado del proyecto, flujo del paciente, flujo del administrador, tecnología y próximos pasos.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ═══════════════════════════════════════════════════════
+   CÓMO FUNCIONA — PAGE-SPECIFIC STYLES
+   ═══════════════════════════════════════════════════════ */
+
+/* ─── Status Dashboard ─── */
+.status-dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  margin: 2.5rem 0;
+}
+.status-card {
+  background: var(--white);
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  position: relative;
+  transition: all 0.3s var(--ease);
+}
+.status-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.status-card.done { border-color: #10B981; background: linear-gradient(135deg, #FFFFFF, #ECFDF5); }
+.status-card.active { border-color: var(--gold); background: linear-gradient(135deg, #FFFFFF, var(--gold-50)); }
+.status-card.pending { border-color: var(--gray-300); }
+.status-card.next { border-color: var(--teal); background: linear-gradient(135deg, #FFFFFF, var(--teal-50)); }
+
+.status-phase {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray-400);
+  margin-bottom: 0.5rem;
+}
+.status-card h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 0.5rem;
+}
+.status-card p { font-size: 0.85rem; color: var(--gray-600); line-height: 1.5; }
+.status-pill {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--radius-full);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.status-pill.done { background: #D1FAE5; color: #065F46; }
+.status-pill.active { background: var(--gold-light); color: #78350F; }
+.status-pill.next { background: var(--teal-light); color: var(--teal-dark); }
+.status-pill.pending { background: var(--gray-100); color: var(--gray-500); }
+
+/* ─── Checklist ─── */
+.checklist {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-top: 1.5rem;
+}
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--gray-100);
+}
+.check-item:last-child { border-bottom: none; }
+.check-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-top: 2px;
+}
+.check-icon.done { background: #10B981; }
+.check-icon.pending { background: var(--gray-300); color: var(--gray-500); }
+.check-item-content { flex: 1; }
+.check-item-content strong {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--navy);
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+.check-item-content span { font-size: 0.82rem; color: var(--gray-500); line-height: 1.5; }
+
+.owner-tag {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.owner-tag.client { background: var(--gold-light); color: #78350F; }
+.owner-tag.dev { background: var(--teal-light); color: var(--teal-dark); }
+
+/* ─── Flow Steps ─── */
+.flow-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+.flow-step {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 1.5rem;
+  position: relative;
+  transition: all 0.3s var(--ease);
+}
+.flow-step:hover {
+  border-color: var(--teal);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+.flow-step-num {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+  color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 12px rgba(14,159,110,0.3);
+}
+.flow-step.admin .flow-step-num { background: linear-gradient(135deg, var(--gold), var(--gold-hover)); color: var(--navy); box-shadow: 0 4px 12px rgba(212,168,77,0.3); }
+.flow-step-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.flow-step h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 0.4rem;
+}
+.flow-step p { font-size: 0.85rem; color: var(--gray-600); line-height: 1.55; }
+
+/* ─── Tech Stack ─── */
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.tech-card {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  text-align: center;
+  transition: all 0.3s;
+}
+.tech-card:hover { border-color: var(--teal); transform: translateY(-2px); }
+.tech-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.tech-card strong {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--navy);
+  margin-bottom: 0.25rem;
+}
+.tech-card span { font-size: 0.75rem; color: var(--gray-500); }
+
+/* ─── Timeline ─── */
+.timeline {
+  position: relative;
+  max-width: 720px;
+  margin: 3rem auto 0;
+  padding-left: 2.5rem;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--teal), var(--gold));
+}
+.timeline-item {
+  position: relative;
+  padding-bottom: 2rem;
+}
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-dot {
+  position: absolute;
+  left: -2.5rem;
+  top: 0.25rem;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 3px solid var(--teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--teal);
+  box-shadow: 0 2px 8px rgba(14,159,110,0.2);
+}
+.timeline-item.done .timeline-dot { background: #10B981; border-color: #10B981; color: var(--white); }
+.timeline-item.current .timeline-dot { background: var(--gold); border-color: var(--gold); color: var(--navy); animation: pulse-dot 2s ease-in-out infinite; }
+.timeline-content {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin-left: 0.5rem;
+}
+.timeline-phase {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.25rem;
+}
+.timeline-content h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: var(--navy);
+  margin-bottom: 0.4rem;
+}
+.timeline-content p { font-size: 0.85rem; color: var(--gray-600); line-height: 1.55; }
+
+/* ─── Action Items Banner ─── */
+.action-banner {
+  background: linear-gradient(135deg, var(--teal-deeper), var(--navy));
+  color: var(--white);
+  border-radius: var(--radius-xl);
+  padding: 3rem 2.5rem;
+  margin-top: 4rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.action-banner::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(14,159,110,0.3), transparent 70%);
+}
+.action-banner > * { position: relative; z-index: 1; }
+.action-banner h2 {
+  font-size: 2rem;
+  color: var(--white);
+  margin-bottom: 0.75rem;
+}
+.action-banner p {
+  color: rgba(255,255,255,0.7);
+  font-size: 1rem;
+  max-width: 600px;
+  margin: 0 auto 1.5rem;
+}
+.action-banner-ctas {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ─── Subsection headings ─── */
+.subsection-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-top: 3rem;
+  margin-bottom: 0.5rem;
+}
+.subsection-sub {
+  font-size: 0.92rem;
+  color: var(--gray-500);
+  margin-bottom: 1rem;
+}
+
+/* ─── Mini nav ─── */
+.mini-nav {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-full);
+  padding: 0.6rem 1.5rem;
+  margin: 2rem auto 0;
+  max-width: fit-content;
+  box-shadow: var(--shadow-sm);
+}
+.mini-nav a {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--gray-500);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+  transition: all 0.2s;
+}
+.mini-nav a:hover { background: var(--teal-50); color: var(--teal); }
+
+@media (max-width: 768px) {
+  .action-banner { padding: 2rem 1.5rem; }
+  .action-banner h2 { font-size: 1.5rem; }
+  .subsection-title { font-size: 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════ NAVBAR ═══════ -->
+<nav class="navbar scrolled" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo" style="color: var(--navy);">
+      <span class="logo-icon">⚕</span>
+      <span class="logo-text">Dr. <span class="gold">Julio Santiago</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Landing</a>
+      <a href="portal.html">Portal de Alumnos</a>
+      <a href="#estado">Estado</a>
+      <a href="#flujo-paciente">Flujo Paciente</a>
+      <a href="#flujo-admin">Flujo Admin</a>
+      <a href="index.html#inscripcion" class="nav-cta">Volver →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<header class="hero" style="min-height: auto; padding: 9rem 2rem 4rem;">
+  <div class="hero-bg-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="hero-grid-overlay"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Documento para el Dr. Julio
+    </div>
+    <h1>
+      Cómo Funciona su <span class="text-gradient">Sistema</span>
+    </h1>
+    <p class="hero-subtitle">
+      Un panorama completo del programa educativo: qué está construido, qué falta, cómo vivirá la experiencia un paciente, y cómo Usted gestionará todo el contenido sin depender de un diseñador.
+    </p>
+
+    <div class="mini-nav">
+      <a href="#estado">📊 Estado</a>
+      <a href="#ya-construido">✅ Construido</a>
+      <a href="#pendiente">⏳ Pendiente</a>
+      <a href="#flujo-paciente">👥 Paciente</a>
+      <a href="#flujo-admin">⚙️ Admin</a>
+      <a href="#tecnologia">🔧 Tecnología</a>
+      <a href="#roadmap">🗺 Roadmap</a>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════ ESTADO DEL PROYECTO ═══════ -->
+<section class="section section-light" id="estado">
+  <div class="container">
+    <div class="section-eyebrow">Estado Actual</div>
+    <h2 class="section-title">¿En qué etapa estamos?</h2>
+    <p class="section-subtitle">El proyecto tiene 4 fases principales. Hoy estamos aquí:</p>
+
+    <div class="status-dashboard">
+      <div class="status-card done">
+        <div class="status-pill done">✓ Listo</div>
+        <div class="status-phase">Fase 1</div>
+        <h3>Demo Funcional</h3>
+        <p>Landing page y portal de alumnos con diseño completo, estructura de módulos, bonos, quiz, casos reales y clases en vivo.</p>
+      </div>
+
+      <div class="status-card active">
+        <div class="status-pill active">En curso</div>
+        <div class="status-phase">Fase 2</div>
+        <h3>Alineamiento</h3>
+        <p>Reunión con Dr. Julio para confirmar textos, colores exactos del logo, testimonios reales y contenido final.</p>
+      </div>
+
+      <div class="status-card next">
+        <div class="status-pill next">Siguiente</div>
+        <div class="status-phase">Fase 3</div>
+        <h3>Migración a WordPress</h3>
+        <p>Convertir demo a WordPress + Tutor LMS para acceso por usuario, caducidad automática y panel de administración.</p>
+      </div>
+
+      <div class="status-card pending">
+        <div class="status-pill pending">Pendiente</div>
+        <div class="status-phase">Fase 4</div>
+        <h3>Launch Oficial</h3>
+        <p>Publicación en juliosantiagomarcelo.com, integración Mercado Pago, email automático y primeros alumnos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ LO QUE YA ESTÁ CONSTRUIDO ═══════ -->
+<section class="section section-cream" id="ya-construido">
+  <div class="container container-narrow">
+    <div class="section-eyebrow">Fase 1 Completada</div>
+    <h2 class="section-title">Lo que ya está <span class="text-teal">funcionando</span></h2>
+    <p class="section-subtitle">Usted ya puede ver y probar todo esto en el demo en vivo.</p>
+
+    <div class="checklist">
+      <div class="check-item">
+        <div class="check-icon done">✓</div>
+        <div class="check-item-content">
+          <strong>Landing page con diseño premium</strong>
+          <span>Hero con video VSL, pain points, transformación, módulos, bonos, bio, testimonios, precio y FAQ.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon done">✓</div>
+        <div class="check-item-content">
+          <strong>Estructura 3 Módulos Base + 3 Bonos + Clases en Vivo</strong>
+          <span>Tal como Usted lo pidió, con plantillas listas para rellenar con el contenido final.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon done">✓</div>
+        <div class="check-item-content">
+          <strong>Garantía de Riesgo Cero de 7 Días visible</strong>
+          <span>Sello circular flotante en la tarjeta de precio + banner explicativo debajo del pricing.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon done">✓</div>
+        <div class="check-item-content">
+          <strong>Precio de lanzamiento S/ 247 → S/ 297 regular</strong>
+          <span>Configurado como pago único, sin cuotas, con métodos Yape / Plin / tarjetas / transferencia.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon done">✓</div>
+        <div class="check-item-content">
+          <strong>Portal de alumnos con login usuario + contraseña</strong>
+          <span>Con aviso de caducidad a 6 meses calculado automáticamente al iniciar sesión.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon done">✓</div>
+        <div class="check-item-content">
+          <strong>Cada módulo tiene: Video + PDFs + Quiz</strong>
+          <span>El quiz es interactivo: al responder, muestra si está correcto e incorporó una explicación escrita o en video.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon done">✓</div>
+        <div class="check-item-content">
+          <strong>Sección "Casos Reales" híbrida</strong>
+          <span>Tarjetas con video + PDF adjunto por cada caso. Diseñada para que Usted agregue casos nuevos fácilmente.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon done">✓</div>
+        <div class="check-item-content">
+          <strong>Sección "Clases en Vivo"</strong>
+          <span>Con tarjeta de próxima clase, botón "Entrar a la Clase", y grabaciones de sesiones anteriores.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon done">✓</div>
+        <div class="check-item-content">
+          <strong>Plantillas con instrucciones para auto-gestión</strong>
+          <span>Cada sección tiene comentarios en el código explicando cómo duplicar bloques para agregar contenido mensual sin romper el diseño.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon done">✓</div>
+        <div class="check-item-content">
+          <strong>Diseño responsive (móvil + tablet + desktop)</strong>
+          <span>Todo funciona perfectamente en celular. El portal tiene sidebar colapsable para móvil.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ LO QUE ESTÁ PENDIENTE ═══════ -->
+<section class="section section-light" id="pendiente">
+  <div class="container container-narrow">
+    <div class="section-eyebrow">Próximos Pasos</div>
+    <h2 class="section-title">Lo que <span class="text-teal">falta hacer</span></h2>
+    <p class="section-subtitle">Dividido por responsable: lo que necesitamos de Usted y lo que yo haré.</p>
+
+    <h3 class="subsection-title">📝 Lo que necesito de Usted, Dr. Julio</h3>
+    <p class="subsection-sub">Todo esto lo puede enviar por email o WhatsApp.</p>
+    <div class="checklist">
+      <div class="check-item">
+        <div class="check-icon pending">1</div>
+        <div class="check-item-content">
+          <strong>Textos finales del programa <span class="owner-tag client">Cliente</span></strong>
+          <span>Títulos y descripciones de los 3 módulos base + 3 bonos + clases en vivo, escritos en lenguaje simple para pacientes con cirrosis.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pending">2</div>
+        <div class="check-item-content">
+          <strong>Colores exactos de su logo <span class="owner-tag client">Cliente</span></strong>
+          <span>El verde medical placeholder se cambia en 30 segundos cuando envíe el código hex de su logo.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pending">3</div>
+        <div class="check-item-content">
+          <strong>Logo e imagen profesional suya <span class="owner-tag client">Cliente</span></strong>
+          <span>Para reemplazar los placeholders en el navbar, hero y sección "Conozca al Dr. Julio".</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pending">4</div>
+        <div class="check-item-content">
+          <strong>Biografía profesional completa <span class="owner-tag client">Cliente</span></strong>
+          <span>Hospital, universidad, años de experiencia, cantidad de pacientes atendidos con cirrosis, y por qué creó el programa.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pending">5</div>
+        <div class="check-item-content">
+          <strong>Testimonios reales <span class="owner-tag client">Cliente</span></strong>
+          <span>De las personas que asistieron a sus clases en vivo anteriores: nombre, ciudad, 1-2 frases de lo que aprendieron.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pending">6</div>
+        <div class="check-item-content">
+          <strong>Videos en Vimeo listos <span class="owner-tag client">Cliente</span></strong>
+          <span>Los videos de cada módulo subidos a su cuenta Vimeo paga con restricción de dominio a juliosantiagomarcelo.com.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pending">7</div>
+        <div class="check-item-content">
+          <strong>PDFs de cada módulo <span class="owner-tag client">Cliente</span></strong>
+          <span>Los documentos descargables que acompañan a cada módulo y cada caso real.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pending">8</div>
+        <div class="check-item-content">
+          <strong>Preguntas de examen con respuestas <span class="owner-tag client">Cliente</span></strong>
+          <span>Para cada módulo: 3-5 preguntas de opción múltiple con la respuesta correcta y su explicación.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pending">9</div>
+        <div class="check-item-content">
+          <strong>Cuenta Mercado Pago activa <span class="owner-tag client">Cliente</span></strong>
+          <span>Con credenciales de API (Public Key + Access Token) para que yo pueda conectarla al botón de compra.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pending">10</div>
+        <div class="check-item-content">
+          <strong>Email profesional de su dominio <span class="owner-tag client">Cliente</span></strong>
+          <span>Ej: contacto@juliosantiagomarcelo.com con SMTP habilitado, para enviar los emails de bienvenida.</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="subsection-title">⚙️ Lo que yo haré (Waseem / Skynet Labs)</h3>
+    <p class="subsection-sub">Todo esto lo hago una vez que reciba sus respuestas.</p>
+    <div class="checklist">
+      <div class="check-item">
+        <div class="check-icon pending">1</div>
+        <div class="check-item-content">
+          <strong>Migración a WordPress + Tutor LMS <span class="owner-tag dev">Desarrollo</span></strong>
+          <span>Reconstruir el diseño dentro de WordPress con el mismo look actual, instalar Tutor LMS (plugin gratuito profesional).</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pending">2</div>
+        <div class="check-item-content">
+          <strong>Sistema de usuarios con caducidad 6 meses <span class="owner-tag dev">Desarrollo</span></strong>
+          <span>Cuando alguien compra, se crea automáticamente un usuario con acceso por 6 meses. Al día 181 pierde el acceso solo.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pending">3</div>
+        <div class="check-item-content">
+          <strong>Integración Mercado Pago <span class="owner-tag dev">Desarrollo</span></strong>
+          <span>Plugin oficial de Mercado Pago conectado a su cuenta. Al pagar, se activa el acceso automáticamente.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pending">4</div>
+        <div class="check-item-content">
+          <strong>Email de bienvenida desde su dominio <span class="owner-tag dev">Desarrollo</span></strong>
+          <span>Configuración SMTP para que los emails salgan desde contacto@juliosantiagomarcelo.com con su usuario y contraseña.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pending">5</div>
+        <div class="check-item-content">
+          <strong>Panel de administración (para Usted) <span class="owner-tag dev">Desarrollo</span></strong>
+          <span>Interfaz simple donde Usted agrega módulos mensuales, sube PDFs, crea exámenes y programa clases en vivo.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pending">6</div>
+        <div class="check-item-content">
+          <strong>Capacitación en video <span class="owner-tag dev">Desarrollo</span></strong>
+          <span>Le grabo un tutorial de 10 minutos mostrando exactamente cómo agregar un módulo nuevo, subir un video, y crear un examen.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pending">7</div>
+        <div class="check-item-content">
+          <strong>Deploy en juliosantiagomarcelo.com <span class="owner-tag dev">Desarrollo</span></strong>
+          <span>Subir todo al dominio, configurar SSL, optimizar velocidad, pruebas finales en móvil y desktop.</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pending">8</div>
+        <div class="check-item-content">
+          <strong>SEO profesional del sitio <span class="owner-tag dev">Desarrollo</span></strong>
+          <span>Mejora SEO de juliosantiagomarcelo.com: meta tags, velocidad, Google Search Console, sitemap, schema médico.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FLUJO DEL PACIENTE ═══════ -->
+<section class="section section-dark" id="flujo-paciente">
+  <div class="container">
+    <div class="section-eyebrow light">Experiencia del Usuario Final</div>
+    <h2 class="section-title light">
+      Cómo vivirá el programa <span class="text-gold">un paciente</span>
+    </h2>
+    <p class="section-subtitle" style="color: rgba(255,255,255,0.6);">De descubrir el programa a graduarse — 10 pasos.</p>
+
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-step-num">1</div>
+        <div class="flow-step-icon">🔍</div>
+        <h4>Descubre el programa</h4>
+        <p>Llega a juliosantiagomarcelo.com desde Google, redes sociales, o recomendación de otro paciente.</p>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-step-num">2</div>
+        <div class="flow-step-icon">🎥</div>
+        <h4>Ve el video VSL</h4>
+        <p>En la parte superior de la landing page ve el mensaje personal del Dr. Julio explicando el programa.</p>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-step-num">3</div>
+        <div class="flow-step-icon">📖</div>
+        <h4>Lee la información</h4>
+        <p>Recorre las secciones: pain points, solución, 3 módulos, 3 bonos, biografía del doctor, testimonios y FAQ.</p>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-step-num">4</div>
+        <div class="flow-step-icon">💳</div>
+        <h4>Hace clic en "Inscribirme"</h4>
+        <p>Ve el precio de lanzamiento S/ 247 con la garantía de 7 días visible. Presiona el botón dorado de Mercado Pago.</p>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-step-num">5</div>
+        <div class="flow-step-icon">🔐</div>
+        <h4>Paga con Mercado Pago</h4>
+        <p>Elige su método: Yape, Plin, tarjeta, débito o transferencia. El checkout es 100% seguro y automatizado.</p>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-step-num">6</div>
+        <div class="flow-step-icon">📧</div>
+        <h4>Recibe email de bienvenida</h4>
+        <p>Email automático desde contacto@juliosantiagomarcelo.com con su usuario, contraseña y enlace al portal.</p>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-step-num">7</div>
+        <div class="flow-step-icon">🔓</div>
+        <h4>Accede al portal de alumnos</h4>
+        <p>Ve su nombre en la barra superior, la fecha de caducidad (6 meses) y el menú lateral con todo el contenido.</p>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-step-num">8</div>
+        <div class="flow-step-icon">🎓</div>
+        <h4>Estudia los módulos</h4>
+        <p>Ve los videos (protegidos en Vimeo), descarga los PDFs, y hace el examen al final de cada módulo.</p>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-step-num">9</div>
+        <div class="flow-step-icon">📺</div>
+        <h4>Entra a las clases en vivo</h4>
+        <p>Cuando hay una sesión programada, entra al link de la clase y puede preguntar directamente al Dr. Julio.</p>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-step-num">10</div>
+        <div class="flow-step-icon">💚</div>
+        <h4>Vive mejor con su condición</h4>
+        <p>Con 6 meses de acceso, revisa el contenido cuantas veces necesite. Su familia también puede verlo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FLUJO DEL ADMIN (Dr. Julio) ═══════ -->
+<section class="section section-cream" id="flujo-admin">
+  <div class="container">
+    <div class="section-eyebrow">Su Panel de Control</div>
+    <h2 class="section-title">
+      Cómo <span class="text-teal">Usted gestionará</span> todo el sistema
+    </h2>
+    <p class="section-subtitle">Sin depender de un diseñador. Todo desde un panel simple.</p>
+
+    <div class="flow-steps">
+      <div class="flow-step admin">
+        <div class="flow-step-num">1</div>
+        <div class="flow-step-icon">🔑</div>
+        <h4>Accede al panel admin</h4>
+        <p>Entra a juliosantiagomarcelo.com/admin con su usuario y contraseña. Ve el dashboard con estadísticas.</p>
+      </div>
+
+      <div class="flow-step admin">
+        <div class="flow-step-num">2</div>
+        <div class="flow-step-icon">➕</div>
+        <h4>Agrega un módulo nuevo</h4>
+        <p>Hace clic en "Nuevo Módulo", rellena un formulario (título, descripción, video de Vimeo, PDFs) y guarda.</p>
+      </div>
+
+      <div class="flow-step admin">
+        <div class="flow-step-num">3</div>
+        <div class="flow-step-icon">📄</div>
+        <h4>Sube los PDFs</h4>
+        <p>Arrastra los archivos PDF al panel. Se suben automáticamente y aparecen en el módulo.</p>
+      </div>
+
+      <div class="flow-step admin">
+        <div class="flow-step-num">4</div>
+        <div class="flow-step-icon">❓</div>
+        <h4>Crea las preguntas del examen</h4>
+        <p>Usa el editor de quizzes: escribe la pregunta, marca la respuesta correcta y escribe la explicación.</p>
+      </div>
+
+      <div class="flow-step admin">
+        <div class="flow-step-num">5</div>
+        <div class="flow-step-icon">📅</div>
+        <h4>Programa clases en vivo</h4>
+        <p>Define la fecha, hora y el enlace de Zoom/Meet. Los alumnos reciben una notificación automática.</p>
+      </div>
+
+      <div class="flow-step admin">
+        <div class="flow-step-num">6</div>
+        <div class="flow-step-icon">👥</div>
+        <h4>Ve los alumnos inscritos</h4>
+        <p>Lista completa de estudiantes: nombre, email, fecha de inscripción y fecha de caducidad.</p>
+      </div>
+
+      <div class="flow-step admin">
+        <div class="flow-step-num">7</div>
+        <div class="flow-step-icon">💰</div>
+        <h4>Revisa los pagos</h4>
+        <p>Historial de ventas y conexión directa con su panel de Mercado Pago. Sabe cuánto ha facturado.</p>
+      </div>
+
+      <div class="flow-step admin">
+        <div class="flow-step-num">8</div>
+        <div class="flow-step-icon">🔄</div>
+        <h4>Renueva contenido cada 6 meses</h4>
+        <p>Puede reemplazar o actualizar módulos según sus necesidades. Los alumnos siempre ven la versión más reciente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ TECNOLOGÍA Y SEGURIDAD ═══════ -->
+<section class="section section-light" id="tecnologia">
+  <div class="container container-narrow">
+    <div class="section-eyebrow">Tecnología</div>
+    <h2 class="section-title">
+      ¿Qué hay bajo el <span class="text-teal">capó</span>?
+    </h2>
+    <p class="section-subtitle">Todo con herramientas profesionales, seguras y probadas.</p>
+
+    <div class="tech-grid">
+      <div class="tech-card">
+        <div class="tech-icon">🌐</div>
+        <strong>WordPress</strong>
+        <span>CMS mundial Nº1</span>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">🎓</div>
+        <strong>Tutor LMS</strong>
+        <span>Plugin profesional gratuito</span>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">🎬</div>
+        <strong>Vimeo Pro</strong>
+        <span>Videos con restricción de dominio</span>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">💳</div>
+        <strong>Mercado Pago</strong>
+        <span>Pagos seguros Perú</span>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">📧</div>
+        <strong>SMTP Profesional</strong>
+        <span>Emails desde su dominio</span>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">🔒</div>
+        <strong>SSL / HTTPS</strong>
+        <span>Certificado de seguridad</span>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">⚡</div>
+        <strong>CDN Global</strong>
+        <span>Carga rápida desde cualquier país</span>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">💾</div>
+        <strong>Backups Automáticos</strong>
+        <span>Copia diaria de seguridad</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ ROADMAP ═══════ -->
+<section class="section section-cream" id="roadmap">
+  <div class="container container-narrow">
+    <div class="section-eyebrow">Hoja de Ruta</div>
+    <h2 class="section-title">
+      Del <span class="text-teal">demo</span> al <span class="text-teal">launch</span>
+    </h2>
+    <p class="section-subtitle">Las 5 etapas del proyecto, en orden.</p>
+
+    <div class="timeline">
+      <div class="timeline-item done">
+        <div class="timeline-dot">✓</div>
+        <div class="timeline-content">
+          <div class="timeline-phase">Etapa 1 — Completada</div>
+          <h4>Demo Funcional</h4>
+          <p>Construcción del prototipo visual con landing page y portal de alumnos. Estructura aprobada por el cliente.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item current">
+        <div class="timeline-dot">2</div>
+        <div class="timeline-content">
+          <div class="timeline-phase">Etapa 2 — En Curso</div>
+          <h4>Reunión de Alineamiento</h4>
+          <p>Llamada con el Dr. Julio para revisar el demo, confirmar estructura final, recibir textos y coordinar contenido.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot">3</div>
+        <div class="timeline-content">
+          <div class="timeline-phase">Etapa 3 — Siguiente</div>
+          <h4>Entrega de Contenido</h4>
+          <p>El Dr. Julio envía: textos finales, videos en Vimeo, PDFs, testimonios reales, logo y preguntas de exámenes.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot">4</div>
+        <div class="timeline-content">
+          <div class="timeline-phase">Etapa 4</div>
+          <h4>Construcción Final en WordPress</h4>
+          <p>Migración del demo a WordPress + Tutor LMS. Integración Mercado Pago. Sistema de usuarios con caducidad 6 meses. Email desde dominio. Deploy en juliosantiagomarcelo.com.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot">5</div>
+        <div class="timeline-content">
+          <div class="timeline-phase">Etapa 5</div>
+          <h4>Launch Oficial y Capacitación</h4>
+          <p>Pruebas finales. Capacitación en video para el Dr. Julio. SEO de la web. Primeros alumnos. Soporte inicial.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ ACTION BANNER ═══════ -->
+<section class="section section-light">
+  <div class="container container-narrow">
+    <div class="action-banner">
+      <h2 style="color:var(--white)">¿Siguiente paso?</h2>
+      <p>Revisemos este documento en la reunión, aclaremos cualquier duda, y acordemos la fecha de entrega de su contenido. Con eso podemos arrancar la Etapa 4.</p>
+      <div class="action-banner-ctas">
+        <a href="index.html" class="btn btn-gold btn-lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Volver al Demo
+        </a>
+        <a href="portal.html" class="btn btn-ghost btn-lg">
+          Ver Portal de Alumnos
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="logo-icon">⚕</span>
+        <span>Dr. <strong>Julio Santiago Marcelo</strong></span>
+        <p>Programa Educativo para Pacientes con Cirrosis</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Landing</a>
+        <a href="portal.html">Portal</a>
+        <a href="#estado">Estado</a>
+        <a href="#flujo-paciente">Flujo Paciente</a>
+        <a href="#flujo-admin">Flujo Admin</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Documento técnico para revisión del cliente &bull; Skynet Labs &bull; Waseem Nasir</p>
+      <div class="footer-legal">
+        <a href="https://www.skynetjoe.com" target="_blank">skynetjoe.com</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
