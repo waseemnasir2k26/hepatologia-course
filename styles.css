@@ -296,6 +296,28 @@ h1, h2, h3, h4 {
   background: var(--gold-hover) !important;
 }
 
+.nav-login {
+  border: 1.5px solid rgba(255,255,255,0.35) !important;
+  padding: 0.45rem 1rem !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--white) !important;
+  font-weight: 600 !important;
+  transition: all 0.3s !important;
+}
+.nav-login:hover {
+  background: var(--white) !important;
+  color: var(--teal-deeper) !important;
+  border-color: var(--white) !important;
+}
+.navbar.scrolled .nav-login {
+  border-color: var(--teal) !important;
+  color: var(--teal) !important;
+}
+.navbar.scrolled .nav-login:hover {
+  background: var(--teal) !important;
+  color: var(--white) !important;
+}
+
 .nav-toggle {
   display: none;
   flex-direction: column;
