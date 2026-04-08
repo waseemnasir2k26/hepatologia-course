@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portal de Estudiantes — Hepatología Avanzada</title>
+<title>Portal de Alumnos — Dr. Julio Santiago Marcelo</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,23 +22,30 @@
   <div class="login-card">
     <div class="login-logo">
       <span class="logo-icon">⚕</span>
-      <span class="logo-text">Dr. <span class="gold">Hepatología</span></span>
+      <span class="logo-text">Dr. <span class="gold">Julio Santiago</span></span>
     </div>
     <div class="login-divider"></div>
-    <h1>Área de Estudiantes</h1>
-    <p>Ingrese la contraseña que recibió en su email de bienvenida.</p>
+    <h1>Área de Alumnos</h1>
+    <p>Ingrese el usuario y la contraseña que recibió en su email de bienvenida.</p>
     <form id="loginForm">
       <div class="login-input-wrap">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-        <input type="password" id="passwordInput" placeholder="Ingrese su contraseña" autocomplete="off" required>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <input type="text" id="userInput" placeholder="Usuario" autocomplete="username" required>
       </div>
-      <div class="login-error" id="loginError">Contraseña incorrecta. Verifique sus credenciales.</div>
+      <div class="login-input-wrap">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        <input type="password" id="passwordInput" placeholder="Contraseña" autocomplete="current-password" required>
+      </div>
+      <div class="login-error" id="loginError">Credenciales incorrectas. Verifique su usuario y contraseña.</div>
       <button type="submit" class="btn btn-gold btn-xl login-btn">
-        <span>Acceder al Curso</span>
+        <span>Acceder al Programa</span>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </button>
     </form>
-    <p class="login-help">¿Olvidó su contraseña? <a href="mailto:doctor@email.com">Contáctenos</a></p>
+    <p class="login-help">¿Problemas para ingresar? <a href="mailto:contacto@juliosantiagomarcelo.com">Contáctenos</a></p>
+    <p style="font-size:0.72rem;color:var(--gray-400);margin-top:1rem;">
+      Acceso de demostración: usuario <strong>demo</strong> &bull; contraseña <strong>hepatologia2026</strong>
+    </p>
   </div>
 </div>
 
@@ -50,12 +57,12 @@
     <div class="portal-nav-inner">
       <a href="#" class="nav-logo" style="color: var(--navy);">
         <span class="logo-icon">⚕</span>
-        <span class="logo-text">Dr. <span class="gold">Hepatología</span></span>
+        <span class="logo-text">Dr. <span class="gold">Julio Santiago</span></span>
       </a>
       <div class="portal-nav-right">
         <span class="portal-user">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          Estudiante
+          <span id="portalUserName">Alumno</span>
         </span>
         <button class="btn-logout" id="logoutBtn">Salir</button>
       </div>
@@ -67,19 +74,26 @@
     <!-- Sidebar -->
     <aside class="portal-sidebar" id="sidebar">
       <div class="sidebar-header">
-        <h3>Módulos del Curso</h3>
+        <h3>Contenido del Programa</h3>
         <div class="progress-bar">
           <div class="progress-fill" id="progressFill" style="width: 0%"></div>
         </div>
-        <span class="progress-text" id="progressText">0 de 5 completados</span>
+        <span class="progress-text" id="progressText">0 de 8 secciones completadas</span>
+        <div class="expiration-notice" style="margin-top: 1rem; font-size: 0.72rem; padding: 0.6rem 0.85rem;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Su acceso vence: <strong id="expiryDate" style="margin-left:4px;">—</strong>
+        </div>
       </div>
 
       <nav class="sidebar-nav" id="sidebarNav">
+        <!-- ═══ MÓDULOS BASE (3) ═══ -->
+        <div style="padding: 0.5rem 1rem 0.25rem; font-family: 'Montserrat',sans-serif; font-size: 0.6rem; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.1em;">Módulos Base</div>
+
         <button class="sidebar-item active" data-module="1">
           <div class="sidebar-item-num">01</div>
           <div class="sidebar-item-info">
-            <span class="sidebar-item-title">Evaluación Hepática Avanzada</span>
-            <span class="sidebar-item-meta">4 lecciones &bull; ~4 hrs</span>
+            <span class="sidebar-item-title">[Módulo Base 1]</span>
+            <span class="sidebar-item-meta">Video + PDFs + Quiz</span>
           </div>
           <div class="sidebar-item-status" data-status="in-progress">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
@@ -89,50 +103,89 @@
         <button class="sidebar-item" data-module="2">
           <div class="sidebar-item-num">02</div>
           <div class="sidebar-item-info">
-            <span class="sidebar-item-title">Hepatitis Viral: Estado del Arte</span>
-            <span class="sidebar-item-meta">4 lecciones &bull; ~4 hrs</span>
+            <span class="sidebar-item-title">[Módulo Base 2]</span>
+            <span class="sidebar-item-meta">Video + PDFs + Quiz</span>
           </div>
-          <div class="sidebar-item-status" data-status="locked">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          <div class="sidebar-item-status">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
           </div>
         </button>
 
         <button class="sidebar-item" data-module="3">
           <div class="sidebar-item-num">03</div>
           <div class="sidebar-item-info">
-            <span class="sidebar-item-title">Enfermedad Hepática Metabólica</span>
-            <span class="sidebar-item-meta">4 lecciones &bull; ~4 hrs</span>
+            <span class="sidebar-item-title">[Módulo Base 3]</span>
+            <span class="sidebar-item-meta">Video + PDFs + Quiz</span>
           </div>
-          <div class="sidebar-item-status" data-status="locked">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          <div class="sidebar-item-status">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
           </div>
         </button>
 
+        <!-- ═══ BONOS EXCLUSIVOS (3) ═══ -->
+        <div style="padding: 1rem 1rem 0.25rem; font-family: 'Montserrat',sans-serif; font-size: 0.6rem; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em;">Bonos Exclusivos</div>
+
         <button class="sidebar-item" data-module="4">
-          <div class="sidebar-item-num">04</div>
+          <div class="sidebar-item-num">B1</div>
           <div class="sidebar-item-info">
-            <span class="sidebar-item-title">Cirrosis y Complicaciones</span>
-            <span class="sidebar-item-meta">4 lecciones &bull; ~4 hrs</span>
+            <span class="sidebar-item-title">[Bono Exclusivo 1]</span>
+            <span class="sidebar-item-meta">Video + PDFs</span>
           </div>
-          <div class="sidebar-item-status" data-status="locked">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          <div class="sidebar-item-status">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
           </div>
         </button>
 
         <button class="sidebar-item" data-module="5">
-          <div class="sidebar-item-num">05</div>
+          <div class="sidebar-item-num">B2</div>
           <div class="sidebar-item-info">
-            <span class="sidebar-item-title">Hepatocarcinoma y Lesiones Focales</span>
-            <span class="sidebar-item-meta">4 lecciones &bull; ~4 hrs</span>
+            <span class="sidebar-item-title">[Bono Exclusivo 2]</span>
+            <span class="sidebar-item-meta">Video + PDFs</span>
           </div>
-          <div class="sidebar-item-status" data-status="locked">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          <div class="sidebar-item-status">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+          </div>
+        </button>
+
+        <button class="sidebar-item" data-module="6">
+          <div class="sidebar-item-num">B3</div>
+          <div class="sidebar-item-info">
+            <span class="sidebar-item-title">[Bono Exclusivo 3]</span>
+            <span class="sidebar-item-meta">Video + PDFs</span>
+          </div>
+          <div class="sidebar-item-status">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+          </div>
+        </button>
+
+        <!-- ═══ EXTRAS ═══ -->
+        <div style="padding: 1rem 1rem 0.25rem; font-family: 'Montserrat',sans-serif; font-size: 0.6rem; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.1em;">Recursos Adicionales</div>
+
+        <button class="sidebar-item" data-module="7">
+          <div class="sidebar-item-num">📁</div>
+          <div class="sidebar-item-info">
+            <span class="sidebar-item-title">Casos Reales</span>
+            <span class="sidebar-item-meta">Videos + PDFs</span>
+          </div>
+          <div class="sidebar-item-status">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+          </div>
+        </button>
+
+        <button class="sidebar-item" data-module="8">
+          <div class="sidebar-item-num">📺</div>
+          <div class="sidebar-item-info">
+            <span class="sidebar-item-title">Clases en Vivo</span>
+            <span class="sidebar-item-meta">Calendario + enlaces</span>
+          </div>
+          <div class="sidebar-item-status">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
           </div>
         </button>
       </nav>
 
       <div class="sidebar-footer">
-        <a href="mailto:doctor@email.com" class="sidebar-support">
+        <a href="mailto:contacto@juliosantiagomarcelo.com" class="sidebar-support">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           Soporte &amp; Consultas
         </a>
@@ -147,24 +200,40 @@
     <!-- Main Content Area -->
     <main class="portal-main" id="portalMain">
 
-      <!-- Module 1 -->
+      <!-- ══════════════════════════════════════════════════════════════════
+           ⚠ PLANTILLA DE MÓDULO — INSTRUCCIONES PARA EL DR. JULIO
+           ══════════════════════════════════════════════════════════════════
+           Para agregar un nuevo módulo cada mes, copie TODO el bloque
+           <div class="module-content" id="module-X">...</div> y:
+           1. Cambie el id="module-X" a un número nuevo (ej: module-9)
+           2. Cambie el número en <div class="module-header-badge">Módulo XX</div>
+           3. Reemplace el título <h2>...</h2> y descripción <p>...</p>
+           4. Reemplace el video de Vimeo en <iframe src="..."> con su ID
+           5. Agregue/quite PDFs en la sección .pdf-list
+           6. Agregue/quite preguntas del quiz en .quiz-block
+           7. Agregue el nuevo botón en el sidebar copiando un .sidebar-item
+           NO TOQUE LAS CLASES CSS — solo el contenido dentro de las etiquetas.
+           ══════════════════════════════════════════════════════════════════ -->
+
+      <!-- ═════ MÓDULO BASE 1 ═════ -->
       <div class="module-content active" id="module-1">
         <div class="module-header">
-          <div class="module-header-badge">Módulo 01</div>
-          <h2>Evaluación Hepática Avanzada</h2>
-          <p>Interpretación de pruebas hepáticas, elastografía, biomarcadores y cuándo indicar biopsia. Algoritmos de evaluación inicial.</p>
+          <div class="module-header-badge">Módulo Base 01</div>
+          <h2>[Título del Módulo Base 1]</h2>
+          <p>[Descripción breve del módulo en lenguaje sencillo para el paciente. Qué aprenderá y por qué es importante.]</p>
         </div>
 
+        <!-- VIDEO PRINCIPAL (Vimeo) -->
         <div class="video-section">
           <div class="video-player">
             <div class="video-player-placeholder">
               <div class="video-play-btn">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
               </div>
-              <p class="video-player-label">Lección 1: Panel hepático completo</p>
-              <p class="video-player-hint">Vimeo Player — Embed privado</p>
+              <p class="video-player-label">Video del Módulo 1</p>
+              <p class="video-player-hint">Reemplace con su embed de Vimeo privado</p>
             </div>
-            <!-- Production: Replace with Vimeo embed
+            <!-- 🎬 PRODUCCIÓN: Reemplazar con embed Vimeo con restricción de dominio:
             <iframe src="https://player.vimeo.com/video/VIDEO_ID_1?badge=0&autopause=0&player_id=0&app_id=58479&dnt=1"
                     frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
                     style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
@@ -172,50 +241,75 @@
           </div>
         </div>
 
-        <div class="lesson-nav">
-          <h3>Lecciones de este módulo</h3>
-          <div class="lesson-list">
-            <button class="lesson-item active" data-lesson="1">
-              <div class="lesson-num">1</div>
-              <div class="lesson-info">
-                <span class="lesson-title">Panel hepático completo: más allá de ALT y AST</span>
-                <span class="lesson-duration">52 min</span>
+        <!-- ══ PDFs DESCARGABLES ══ -->
+        <div class="resources-block">
+          <h4>📄 Material Descargable (PDFs)</h4>
+          <div class="pdf-list">
+            <a href="#" class="pdf-item">
+              <div class="pdf-icon">PDF</div>
+              <div>
+                <strong>[Nombre del documento 1]</strong>
+                <span class="pdf-meta">PDF · ~2 MB</span>
               </div>
-              <div class="lesson-status playing">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              <span class="pdf-download">Descargar ↓</span>
+            </a>
+            <a href="#" class="pdf-item">
+              <div class="pdf-icon">PDF</div>
+              <div>
+                <strong>[Nombre del documento 2]</strong>
+                <span class="pdf-meta">PDF · ~1 MB</span>
               </div>
-            </button>
-            <button class="lesson-item" data-lesson="2">
-              <div class="lesson-num">2</div>
-              <div class="lesson-info">
-                <span class="lesson-title">Elastografía transitoria: técnica e interpretación</span>
-                <span class="lesson-duration">48 min</span>
-              </div>
-              <div class="lesson-status">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
-              </div>
-            </button>
-            <button class="lesson-item" data-lesson="3">
-              <div class="lesson-num">3</div>
-              <div class="lesson-info">
-                <span class="lesson-title">Biomarcadores no invasivos de fibrosis</span>
-                <span class="lesson-duration">45 min</span>
-              </div>
-              <div class="lesson-status">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
-              </div>
-            </button>
-            <button class="lesson-item" data-lesson="4">
-              <div class="lesson-num">4</div>
-              <div class="lesson-info">
-                <span class="lesson-title">Indicaciones y contraindicaciones de biopsia hepática</span>
-                <span class="lesson-duration">55 min</span>
-              </div>
-              <div class="lesson-status">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
-              </div>
-            </button>
+              <span class="pdf-download">Descargar ↓</span>
+            </a>
           </div>
+        </div>
+
+        <!-- ══ QUIZ / EXAMEN DEL MÓDULO ══ -->
+        <div class="quiz-block">
+          <div class="quiz-block-header">
+            <div class="quiz-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+            </div>
+            <div>
+              <h4>Examen del Módulo</h4>
+              <p>Ponga a prueba lo aprendido. Después de responder, vea la explicación.</p>
+            </div>
+          </div>
+
+          <!-- ═══ PLANTILLA DE PREGUNTA — duplicar este bloque para agregar más ═══ -->
+          <div class="quiz-question">
+            <span class="quiz-question-num">Pregunta 1</span>
+            <p>[Texto de la pregunta 1 — ¿qué concepto del módulo quiere evaluar?]</p>
+            <div class="quiz-options">
+              <button class="quiz-option" data-correct="false">[Opción A]</button>
+              <button class="quiz-option" data-correct="true">[Opción B — respuesta correcta]</button>
+              <button class="quiz-option" data-correct="false">[Opción C]</button>
+              <button class="quiz-option" data-correct="false">[Opción D]</button>
+            </div>
+            <div class="quiz-explanation">
+              <strong>Explicación de la respuesta correcta:</strong>
+              [Aquí explique por qué la opción correcta es la correcta, en lenguaje sencillo.]
+              <a href="#" class="quiz-explanation-video">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                Ver explicación en video
+              </a>
+            </div>
+          </div>
+
+          <div class="quiz-question">
+            <span class="quiz-question-num">Pregunta 2</span>
+            <p>[Texto de la pregunta 2]</p>
+            <div class="quiz-options">
+              <button class="quiz-option" data-correct="true">[Opción A — correcta]</button>
+              <button class="quiz-option" data-correct="false">[Opción B]</button>
+              <button class="quiz-option" data-correct="false">[Opción C]</button>
+            </div>
+            <div class="quiz-explanation">
+              <strong>Explicación de la respuesta correcta:</strong>
+              [Explicación en lenguaje sencillo de por qué esta es la respuesta correcta.]
+            </div>
+          </div>
+          <!-- ═══ FIN PLANTILLA PREGUNTA ═══ -->
         </div>
 
         <div class="module-nav-btns">
@@ -226,12 +320,12 @@
         </div>
       </div>
 
-      <!-- Module 2 -->
+      <!-- ═════ MÓDULO BASE 2 ═════ -->
       <div class="module-content" id="module-2">
         <div class="module-header">
-          <div class="module-header-badge">Módulo 02</div>
-          <h2>Hepatitis Viral: Estado del Arte</h2>
-          <p>Manejo actualizado de Hepatitis B y C. Nuevos antivirales, criterios de tratamiento, y seguimiento post-cura.</p>
+          <div class="module-header-badge">Módulo Base 02</div>
+          <h2>[Título del Módulo Base 2]</h2>
+          <p>[Descripción breve del módulo en lenguaje sencillo para el paciente.]</p>
         </div>
         <div class="video-section">
           <div class="video-player">
@@ -239,18 +333,43 @@
               <div class="video-play-btn">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
               </div>
-              <p class="video-player-label">Lección 1: Hepatitis B — cuándo tratar</p>
-              <p class="video-player-hint">Vimeo Player — Embed privado</p>
+              <p class="video-player-label">Video del Módulo 2</p>
+              <p class="video-player-hint">Reemplace con su embed de Vimeo privado</p>
             </div>
           </div>
         </div>
-        <div class="lesson-nav">
-          <h3>Lecciones de este módulo</h3>
-          <div class="lesson-list">
-            <button class="lesson-item active"><div class="lesson-num">1</div><div class="lesson-info"><span class="lesson-title">Hepatitis B: cuándo tratar y cuándo vigilar</span><span class="lesson-duration">50 min</span></div><div class="lesson-status playing"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></button>
-            <button class="lesson-item"><div class="lesson-num">2</div><div class="lesson-info"><span class="lesson-title">Hepatitis C: antivirales de acción directa (DAAs)</span><span class="lesson-duration">55 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
-            <button class="lesson-item"><div class="lesson-num">3</div><div class="lesson-info"><span class="lesson-title">Coinfección VIH-VHC: consideraciones especiales</span><span class="lesson-duration">42 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
-            <button class="lesson-item"><div class="lesson-num">4</div><div class="lesson-info"><span class="lesson-title">Seguimiento post-RVS y riesgo residual de HCC</span><span class="lesson-duration">48 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
+        <div class="resources-block">
+          <h4>📄 Material Descargable (PDFs)</h4>
+          <div class="pdf-list">
+            <a href="#" class="pdf-item">
+              <div class="pdf-icon">PDF</div>
+              <div><strong>[Documento del módulo 2]</strong><span class="pdf-meta">PDF · ~2 MB</span></div>
+              <span class="pdf-download">Descargar ↓</span>
+            </a>
+          </div>
+        </div>
+        <div class="quiz-block">
+          <div class="quiz-block-header">
+            <div class="quiz-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+            </div>
+            <div>
+              <h4>Examen del Módulo</h4>
+              <p>Ponga a prueba lo aprendido.</p>
+            </div>
+          </div>
+          <div class="quiz-question">
+            <span class="quiz-question-num">Pregunta 1</span>
+            <p>[Pregunta del módulo 2]</p>
+            <div class="quiz-options">
+              <button class="quiz-option" data-correct="false">[Opción A]</button>
+              <button class="quiz-option" data-correct="true">[Opción B — correcta]</button>
+              <button class="quiz-option" data-correct="false">[Opción C]</button>
+            </div>
+            <div class="quiz-explanation">
+              <strong>Explicación:</strong>
+              [Explicación en lenguaje claro.]
+            </div>
           </div>
         </div>
         <div class="module-nav-btns">
@@ -259,12 +378,12 @@
         </div>
       </div>
 
-      <!-- Module 3 -->
+      <!-- ═════ MÓDULO BASE 3 ═════ -->
       <div class="module-content" id="module-3">
         <div class="module-header">
-          <div class="module-header-badge">Módulo 03</div>
-          <h2>Enfermedad Hepática Metabólica y Alcohólica</h2>
-          <p>MASLD/MASH y hepatopatía alcohólica. Diagnóstico, estadificación y manejo multidisciplinario.</p>
+          <div class="module-header-badge">Módulo Base 03</div>
+          <h2>[Título del Módulo Base 3]</h2>
+          <p>[Descripción breve del módulo en lenguaje sencillo para el paciente.]</p>
         </div>
         <div class="video-section">
           <div class="video-player">
@@ -272,32 +391,57 @@
               <div class="video-play-btn">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
               </div>
-              <p class="video-player-label">Lección 1: Nueva nomenclatura MASLD</p>
-              <p class="video-player-hint">Vimeo Player — Embed privado</p>
+              <p class="video-player-label">Video del Módulo 3</p>
+              <p class="video-player-hint">Reemplace con su embed de Vimeo privado</p>
             </div>
           </div>
         </div>
-        <div class="lesson-nav">
-          <h3>Lecciones de este módulo</h3>
-          <div class="lesson-list">
-            <button class="lesson-item active"><div class="lesson-num">1</div><div class="lesson-info"><span class="lesson-title">Nueva nomenclatura: de NAFLD a MASLD</span><span class="lesson-duration">46 min</span></div><div class="lesson-status playing"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></button>
-            <button class="lesson-item"><div class="lesson-num">2</div><div class="lesson-info"><span class="lesson-title">Estratificación de riesgo y seguimiento</span><span class="lesson-duration">52 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
-            <button class="lesson-item"><div class="lesson-num">3</div><div class="lesson-info"><span class="lesson-title">Hepatitis alcohólica aguda: manejo intensivo</span><span class="lesson-duration">58 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
-            <button class="lesson-item"><div class="lesson-num">4</div><div class="lesson-info"><span class="lesson-title">Nuevas terapias en pipeline para MASH</span><span class="lesson-duration">44 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
+        <div class="resources-block">
+          <h4>📄 Material Descargable (PDFs)</h4>
+          <div class="pdf-list">
+            <a href="#" class="pdf-item">
+              <div class="pdf-icon">PDF</div>
+              <div><strong>[Documento del módulo 3]</strong><span class="pdf-meta">PDF · ~2 MB</span></div>
+              <span class="pdf-download">Descargar ↓</span>
+            </a>
+          </div>
+        </div>
+        <div class="quiz-block">
+          <div class="quiz-block-header">
+            <div class="quiz-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+            </div>
+            <div>
+              <h4>Examen del Módulo</h4>
+              <p>Ponga a prueba lo aprendido.</p>
+            </div>
+          </div>
+          <div class="quiz-question">
+            <span class="quiz-question-num">Pregunta 1</span>
+            <p>[Pregunta del módulo 3]</p>
+            <div class="quiz-options">
+              <button class="quiz-option" data-correct="true">[Opción A — correcta]</button>
+              <button class="quiz-option" data-correct="false">[Opción B]</button>
+              <button class="quiz-option" data-correct="false">[Opción C]</button>
+            </div>
+            <div class="quiz-explanation">
+              <strong>Explicación:</strong>
+              [Explicación en lenguaje claro.]
+            </div>
           </div>
         </div>
         <div class="module-nav-btns">
           <button class="btn btn-ghost-dark" onclick="switchModule(2)">← Módulo Anterior</button>
-          <button class="btn btn-primary" onclick="switchModule(4)">Siguiente Módulo →</button>
+          <button class="btn btn-primary" onclick="switchModule(4)">Ir a Bonos →</button>
         </div>
       </div>
 
-      <!-- Module 4 -->
+      <!-- ═════ BONO EXCLUSIVO 1 ═════ -->
       <div class="module-content" id="module-4">
         <div class="module-header">
-          <div class="module-header-badge">Módulo 04</div>
-          <h2>Cirrosis y Complicaciones</h2>
-          <p>Manejo integral del paciente cirrótico. Ascitis, encefalopatía, sangrado variceal y evaluación para trasplante.</p>
+          <div class="module-header-badge">🎁 Bono Exclusivo 01</div>
+          <h2>[Título del Bono 1]</h2>
+          <p>[Descripción del bono — qué beneficio adicional aporta.]</p>
         </div>
         <div class="video-section">
           <div class="video-player">
@@ -305,32 +449,33 @@
               <div class="video-play-btn">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
               </div>
-              <p class="video-player-label">Lección 1: Ascitis refractaria</p>
-              <p class="video-player-hint">Vimeo Player — Embed privado</p>
+              <p class="video-player-label">Video del Bono 1</p>
+              <p class="video-player-hint">Vimeo privado</p>
             </div>
           </div>
         </div>
-        <div class="lesson-nav">
-          <h3>Lecciones de este módulo</h3>
-          <div class="lesson-list">
-            <button class="lesson-item active"><div class="lesson-num">1</div><div class="lesson-info"><span class="lesson-title">Ascitis refractaria: paracentesis y TIPS</span><span class="lesson-duration">54 min</span></div><div class="lesson-status playing"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></button>
-            <button class="lesson-item"><div class="lesson-num">2</div><div class="lesson-info"><span class="lesson-title">Encefalopatía hepática: nuevos enfoques</span><span class="lesson-duration">50 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
-            <button class="lesson-item"><div class="lesson-num">3</div><div class="lesson-info"><span class="lesson-title">Profilaxis y manejo de sangrado variceal</span><span class="lesson-duration">56 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
-            <button class="lesson-item"><div class="lesson-num">4</div><div class="lesson-info"><span class="lesson-title">Evaluación y referencia para trasplante hepático</span><span class="lesson-duration">60 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
+        <div class="resources-block">
+          <h4>📄 Material del Bono</h4>
+          <div class="pdf-list">
+            <a href="#" class="pdf-item">
+              <div class="pdf-icon">PDF</div>
+              <div><strong>[Documento del bono 1]</strong><span class="pdf-meta">PDF</span></div>
+              <span class="pdf-download">Descargar ↓</span>
+            </a>
           </div>
         </div>
         <div class="module-nav-btns">
           <button class="btn btn-ghost-dark" onclick="switchModule(3)">← Módulo Anterior</button>
-          <button class="btn btn-primary" onclick="switchModule(5)">Siguiente Módulo →</button>
+          <button class="btn btn-primary" onclick="switchModule(5)">Siguiente Bono →</button>
         </div>
       </div>
 
-      <!-- Module 5 -->
+      <!-- ═════ BONO EXCLUSIVO 2 ═════ -->
       <div class="module-content" id="module-5">
         <div class="module-header">
-          <div class="module-header-badge">Módulo 05</div>
-          <h2>Hepatocarcinoma y Lesiones Focales</h2>
-          <p>Vigilancia, diagnóstico por imagen, estadificación BCLC y opciones terapéuticas del carcinoma hepatocelular.</p>
+          <div class="module-header-badge">🎁 Bono Exclusivo 02</div>
+          <h2>[Título del Bono 2]</h2>
+          <p>[Descripción del bono.]</p>
         </div>
         <div class="video-section">
           <div class="video-player">
@@ -338,22 +483,177 @@
               <div class="video-play-btn">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
               </div>
-              <p class="video-player-label">Lección 1: Programa de vigilancia HCC</p>
-              <p class="video-player-hint">Vimeo Player — Embed privado</p>
+              <p class="video-player-label">Video del Bono 2</p>
+              <p class="video-player-hint">Vimeo privado</p>
             </div>
           </div>
         </div>
-        <div class="lesson-nav">
-          <h3>Lecciones de este módulo</h3>
-          <div class="lesson-list">
-            <button class="lesson-item active"><div class="lesson-num">1</div><div class="lesson-info"><span class="lesson-title">Programa de vigilancia: quién, cómo y cuándo</span><span class="lesson-duration">48 min</span></div><div class="lesson-status playing"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></button>
-            <button class="lesson-item"><div class="lesson-num">2</div><div class="lesson-info"><span class="lesson-title">LI-RADS: clasificación y toma de decisiones</span><span class="lesson-duration">52 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
-            <button class="lesson-item"><div class="lesson-num">3</div><div class="lesson-info"><span class="lesson-title">Estadificación BCLC y algoritmo terapéutico</span><span class="lesson-duration">55 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
-            <button class="lesson-item"><div class="lesson-num">4</div><div class="lesson-info"><span class="lesson-title">Inmunoterapia y nuevas combinaciones para HCC avanzado</span><span class="lesson-duration">50 min</span></div><div class="lesson-status"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div></button>
+        <div class="resources-block">
+          <h4>📄 Material del Bono</h4>
+          <div class="pdf-list">
+            <a href="#" class="pdf-item">
+              <div class="pdf-icon">PDF</div>
+              <div><strong>[Documento del bono 2]</strong><span class="pdf-meta">PDF</span></div>
+              <span class="pdf-download">Descargar ↓</span>
+            </a>
           </div>
         </div>
         <div class="module-nav-btns">
-          <button class="btn btn-ghost-dark" onclick="switchModule(4)">← Módulo Anterior</button>
+          <button class="btn btn-ghost-dark" onclick="switchModule(4)">← Bono Anterior</button>
+          <button class="btn btn-primary" onclick="switchModule(6)">Siguiente Bono →</button>
+        </div>
+      </div>
+
+      <!-- ═════ BONO EXCLUSIVO 3 ═════ -->
+      <div class="module-content" id="module-6">
+        <div class="module-header">
+          <div class="module-header-badge">🎁 Bono Exclusivo 03</div>
+          <h2>[Título del Bono 3]</h2>
+          <p>[Descripción del bono.]</p>
+        </div>
+        <div class="video-section">
+          <div class="video-player">
+            <div class="video-player-placeholder">
+              <div class="video-play-btn">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+              <p class="video-player-label">Video del Bono 3</p>
+              <p class="video-player-hint">Vimeo privado</p>
+            </div>
+          </div>
+        </div>
+        <div class="resources-block">
+          <h4>📄 Material del Bono</h4>
+          <div class="pdf-list">
+            <a href="#" class="pdf-item">
+              <div class="pdf-icon">PDF</div>
+              <div><strong>[Documento del bono 3]</strong><span class="pdf-meta">PDF</span></div>
+              <span class="pdf-download">Descargar ↓</span>
+            </a>
+          </div>
+        </div>
+        <div class="module-nav-btns">
+          <button class="btn btn-ghost-dark" onclick="switchModule(5)">← Bono Anterior</button>
+          <button class="btn btn-primary" onclick="switchModule(7)">Ver Casos Reales →</button>
+        </div>
+      </div>
+
+      <!-- ═════ CASOS REALES (HÍBRIDO: videos + PDFs) ═════ -->
+      <div class="module-content" id="module-7">
+        <div class="module-header">
+          <div class="module-header-badge">📁 Casos Reales</div>
+          <h2>Casos Reales del Dr. Julio</h2>
+          <p>Experiencias reales explicadas en video, acompañadas de material en PDF. Aprenda de casos concretos como el suyo.</p>
+        </div>
+
+        <!-- ═══ PLANTILLA DE CASO REAL — duplicar para agregar más casos ═══ -->
+        <div class="casos-grid">
+          <div class="caso-card">
+            <div class="caso-video">
+              <div class="caso-video-play">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+              <!-- Reemplazar con iframe Vimeo en producción -->
+            </div>
+            <div class="caso-body">
+              <h4>[Título del Caso Real 1]</h4>
+              <p>[Breve descripción del caso: situación del paciente, tratamiento y evolución.]</p>
+              <a href="#" class="caso-pdf-inline">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Ver PDF del caso
+              </a>
+            </div>
+          </div>
+
+          <div class="caso-card">
+            <div class="caso-video">
+              <div class="caso-video-play">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+            <div class="caso-body">
+              <h4>[Título del Caso Real 2]</h4>
+              <p>[Breve descripción del caso.]</p>
+              <a href="#" class="caso-pdf-inline">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Ver PDF del caso
+              </a>
+            </div>
+          </div>
+
+          <div class="caso-card">
+            <div class="caso-video">
+              <div class="caso-video-play">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+            <div class="caso-body">
+              <h4>[Título del Caso Real 3]</h4>
+              <p>[Breve descripción del caso.]</p>
+              <a href="#" class="caso-pdf-inline">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Ver PDF del caso
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- ═══ FIN PLANTILLA CASO REAL ═══ -->
+
+        <div class="template-helper">
+          <strong>ℹ Nota para el Dr. Julio:</strong> Para agregar un caso real nuevo,
+          copie cualquier bloque <code>&lt;div class="caso-card"&gt;</code> y
+          reemplace el título, descripción, enlace del video y del PDF. Puede tener
+          tantos casos como desee — todos se organizarán automáticamente en la grilla.
+        </div>
+
+        <div class="module-nav-btns">
+          <button class="btn btn-ghost-dark" onclick="switchModule(6)">← Módulo Anterior</button>
+          <button class="btn btn-primary" onclick="switchModule(8)">Ver Clases en Vivo →</button>
+        </div>
+      </div>
+
+      <!-- ═════ CLASES EN VIVO ═════ -->
+      <div class="module-content" id="module-8">
+        <div class="module-header">
+          <div class="module-header-badge">📺 Clases en Vivo</div>
+          <h2>Clases en Vivo con el Dr. Julio</h2>
+          <p>Conéctese en vivo con el Dr. Julio Santiago Marcelo. Haga sus preguntas directamente y reciba respuestas personalizadas.</p>
+        </div>
+
+        <div class="live-classes-card" style="margin-top:0;">
+          <div class="live-icon"><span class="live-dot"></span>EN VIVO</div>
+          <div class="live-info">
+            <h3>Próxima Clase en Vivo</h3>
+            <p><strong>[Fecha de la próxima clase]</strong> &bull; [Hora, zona horaria]<br>
+            <span style="color:rgba(255,255,255,0.5); font-size:0.85rem;">[Tema de la sesión]</span></p>
+            <a href="#" class="btn btn-gold" style="margin-top:1rem;">Entrar a la Clase</a>
+          </div>
+        </div>
+
+        <div class="resources-block" style="margin-top:2rem;">
+          <h4>📹 Grabaciones de Clases Anteriores</h4>
+          <div class="pdf-list">
+            <a href="#" class="pdf-item">
+              <div class="pdf-icon" style="background:var(--teal);">VID</div>
+              <div>
+                <strong>[Título de la clase grabada 1]</strong>
+                <span class="pdf-meta">Grabada el [fecha] · ~1 hora</span>
+              </div>
+              <span class="pdf-download">Ver →</span>
+            </a>
+            <a href="#" class="pdf-item">
+              <div class="pdf-icon" style="background:var(--teal);">VID</div>
+              <div>
+                <strong>[Título de la clase grabada 2]</strong>
+                <span class="pdf-meta">Grabada el [fecha] · ~1 hora</span>
+              </div>
+              <span class="pdf-download">Ver →</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="module-nav-btns">
+          <button class="btn btn-ghost-dark" onclick="switchModule(7)">← Casos Reales</button>
           <span></span>
         </div>
 
@@ -361,8 +661,8 @@
         <div class="completion-card">
           <div class="completion-icon">🎓</div>
           <h3>¡Felicitaciones!</h3>
-          <p>Ha completado todos los módulos del curso. Puede solicitar su certificado de finalización contactando al Dr. [Nombre].</p>
-          <a href="mailto:doctor@email.com" class="btn btn-gold">Solicitar Certificado</a>
+          <p>Ha explorado todo el contenido del programa. Recuerde que puede volver a cualquier módulo las veces que necesite durante los 6 meses de acceso.</p>
+          <a href="mailto:contacto@juliosantiagomarcelo.com" class="btn btn-gold">Contactar al Dr. Julio</a>
         </div>
       </div>
 
@@ -371,18 +671,33 @@
 </div>
 
 <script>
-// ─── LOGIN ───
-const DEMO_PASSWORD = 'hepatologia2026';
+// ═══════════════════════════════════════════════════════
+// PORTAL — SCRIPT DEL ÁREA DE ALUMNOS
+// ═══════════════════════════════════════════════════════
+
+// ─── DEMO LOGIN (producción: reemplazar con backend real) ───
+// ⚠ IMPORTANTE: Este login es solo de demostración. En producción se usará
+//    un sistema de usuarios real con base de datos + expiración a 6 meses.
+const DEMO_USERS = {
+  'demo': 'hepatologia2026'
+  // Agregar más usuarios aquí o conectar a backend real
+};
 
 document.getElementById('loginForm').addEventListener('submit', (e) => {
   e.preventDefault();
+  const user = document.getElementById('userInput').value.trim().toLowerCase();
   const pw = document.getElementById('passwordInput').value;
 
-  // In production, this would be a server-side check
-  // For demo, use a simple password
-  if (pw === DEMO_PASSWORD || pw.length > 0) {
+  if (DEMO_USERS[user] && DEMO_USERS[user] === pw) {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('portal').style.display = 'block';
+    document.getElementById('portalUserName').textContent = user.charAt(0).toUpperCase() + user.slice(1);
+
+    // Calcular fecha de expiración (6 meses desde ahora para la demo)
+    const expiry = new Date();
+    expiry.setMonth(expiry.getMonth() + 6);
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    document.getElementById('expiryDate').textContent = expiry.toLocaleDateString('es-PE', options);
   } else {
     document.getElementById('loginError').classList.add('visible');
     document.getElementById('passwordInput').classList.add('error');
@@ -393,31 +708,24 @@ document.getElementById('loginForm').addEventListener('submit', (e) => {
   }
 });
 
-// ─── MODULE SWITCHING ───
+// ─── NAVEGACIÓN ENTRE MÓDULOS ───
 function switchModule(num) {
-  // Hide all
   document.querySelectorAll('.module-content').forEach(m => m.classList.remove('active'));
   document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
 
-  // Show selected
   const target = document.getElementById(`module-${num}`);
   if (target) {
     target.classList.add('active');
     target.scrollTop = 0;
   }
 
-  // Update sidebar
   const sidebarItem = document.querySelector(`.sidebar-item[data-module="${num}"]`);
   if (sidebarItem) sidebarItem.classList.add('active');
 
-  // Scroll to top on mobile
   window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  // Close sidebar on mobile
   document.getElementById('sidebar').classList.remove('open');
 }
 
-// Sidebar click handlers
 document.querySelectorAll('.sidebar-item').forEach(item => {
   item.addEventListener('click', () => {
     const num = parseInt(item.dataset.module, 10);
@@ -428,7 +736,6 @@ document.querySelectorAll('.sidebar-item').forEach(item => {
 // ─── SIDEBAR TOGGLE (Mobile) ───
 const sidebarToggle = document.getElementById('sidebarToggle');
 const sidebar = document.getElementById('sidebar');
-
 if (sidebarToggle && sidebar) {
   sidebarToggle.addEventListener('click', () => {
     sidebar.classList.toggle('open');
@@ -439,26 +746,42 @@ if (sidebarToggle && sidebar) {
 document.getElementById('logoutBtn').addEventListener('click', () => {
   document.getElementById('portal').style.display = 'none';
   document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('userInput').value = '';
   document.getElementById('passwordInput').value = '';
 });
 
-// ─── LESSON CLICK ───
-document.querySelectorAll('.lesson-item').forEach(item => {
-  item.addEventListener('click', () => {
-    const parent = item.closest('.lesson-list');
-    parent.querySelectorAll('.lesson-item').forEach(l => l.classList.remove('active'));
-    item.classList.add('active');
+// ─── QUIZ INTERACTIVITY ───
+// Cuando el alumno hace clic en una opción, se marca como correcta/incorrecta
+// y se revela la explicación automáticamente.
+document.querySelectorAll('.quiz-option').forEach(option => {
+  option.addEventListener('click', (e) => {
+    const question = e.target.closest('.quiz-question');
+    const allOptions = question.querySelectorAll('.quiz-option');
+    const explanation = question.querySelector('.quiz-explanation');
+    const isCorrect = e.target.dataset.correct === 'true';
 
-    // Update video label
-    const title = item.querySelector('.lesson-title').textContent;
-    const moduleContent = item.closest('.module-content');
-    const label = moduleContent.querySelector('.video-player-label');
-    if (label) label.textContent = title;
+    // Desactivar todas las opciones después de responder
+    allOptions.forEach(opt => {
+      opt.disabled = true;
+      if (opt.dataset.correct === 'true') {
+        opt.classList.add('correct');
+      }
+    });
+
+    // Marcar la seleccionada si es incorrecta
+    if (!isCorrect) {
+      e.target.classList.add('incorrect');
+    }
+
+    // Mostrar explicación
+    if (explanation) {
+      explanation.classList.add('visible');
+    }
   });
 });
 
-// ─── DISABLE RIGHT CLICK ON VIDEO AREA (Anti-download) ───
-document.querySelectorAll('.video-player').forEach(player => {
+// ─── ANTI-DOWNLOAD (click derecho deshabilitado en videos) ───
+document.querySelectorAll('.video-player, .caso-video').forEach(player => {
   player.addEventListener('contextmenu', (e) => e.preventDefault());
 });
 </script>
