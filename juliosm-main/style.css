@@ -315,6 +315,10 @@ h1,h2,h3,h4 { font-family:'Playfair Display',Georgia,serif; line-height:1.2; col
 [data-animate] { opacity:0; transform:translateY(30px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
 [data-animate="fade-down"] { transform:translateY(-20px); }
 [data-animate].animated { opacity:1; transform:translateY(0); }
+/* Fallback: show content if JS fails to load */
+.no-js [data-animate], [data-animate]:nth-child(n) { animation: jsguard 0s 2s forwards; }
+[data-animate].animated { animation:none; }
+@keyframes jsguard { to { opacity:1; transform:translateY(0); } }
 
 /* ═══════════════════════════════════════
    GENERIC WP PAGES
