@@ -2,8 +2,16 @@
 /**
  * Template Name: Landing del Curso
  * Sales funnel landing page for the Cirrhosis Course
+ *
+ * Dual-mode: in portal mode renders student gateway; in landing mode renders sales funnel.
  */
 get_header();
+
+if ( jsma_is_portal() ) {
+    require __DIR__ . '/front-page-portal.php';
+    get_footer();
+    return;
+}
 
 $mp_link       = esc_url( get_theme_mod( 'jsma_mercadopago', 'https://mpago.la/1sXKiM3' ) );
 $vid_mod1      = esc_attr( get_theme_mod( 'jsma_vimeo_mod1', '1180151832' ) );
@@ -13,9 +21,10 @@ $vid_bon1      = esc_attr( get_theme_mod( 'jsma_vimeo_bon1', '1181683995' ) );
 $vid_bon2      = esc_attr( get_theme_mod( 'jsma_vimeo_bon2', '1181686811' ) );
 $vid_bon3      = esc_attr( get_theme_mod( 'jsma_vimeo_bon3', '1181691449' ) );
 $vid_test      = esc_attr( get_theme_mod( 'jsma_vimeo_test', '1182155574' ) );
-$doctor_photo  = esc_url( get_theme_mod( 'jsma_doctor_photo', '' ) );
+$doctor_photo  = esc_url( get_theme_mod( 'jsma_doctor_photo', get_template_directory_uri() . '/assets/img/doctor-photo.jpg' ) );
 $doctor_bio    = wp_kses_post( get_theme_mod( 'jsma_doctor_bio', 'El Dr. Julio Santiago Marcelo es un gastroenterólogo con amplia experiencia en el diagnóstico y tratamiento de enfermedades del sistema digestivo y del hígado.' ) );
 $email         = esc_html( get_theme_mod( 'jsma_email', 'contacto@juliosantiagomarcelo.com' ) );
+$years         = esc_html( get_theme_mod( 'jsma_years', '10+' ) );
 ?>
 
 <!-- ═══════ HERO ═══════ -->
@@ -251,7 +260,7 @@ $email         = esc_html( get_theme_mod( 'jsma_email', 'contacto@juliosantiagom
     <div class="doctor-card" data-animate="fade-up" data-delay="100">
       <div class="doctor-photo">
         <?php if ( $doctor_photo ) : ?>
-          <img src="<?php echo $doctor_photo; ?>" alt="Dr. Julio Santiago Marcelo" class="doctor-photo-img">
+          <img src="<?php echo $doctor_photo; ?>" alt="Dr. Julio Santiago Marcelo, Gastroenterólogo" width="600" height="800" loading="lazy" class="doctor-photo-img">
         <?php else : ?>
           <div class="doctor-photo-placeholder">
             <span>&#128104;&#8205;&#9877;&#65039;</span>
@@ -259,7 +268,7 @@ $email         = esc_html( get_theme_mod( 'jsma_email', 'contacto@juliosantiagom
           </div>
         <?php endif; ?>
         <div class="doctor-badge-float">
-          <span>15+</span>
+          <span><?php echo $years; ?></span>
           <small>Años de Experiencia</small>
         </div>
       </div>
@@ -341,7 +350,7 @@ $email         = esc_html( get_theme_mod( 'jsma_email', 'contacto@juliosantiagom
         </div>
 
         <div class="price-card-content">
-          <h3>Programa Completo para Pacientes con Cirrosis</h3>
+          <h3>Cirrosis 360 — Programa Completo</h3>
           <div class="price-amount">
             <span class="price-currency">S/</span>
             <span class="price-value">247</span>

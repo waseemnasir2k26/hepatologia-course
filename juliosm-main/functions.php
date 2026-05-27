@@ -8,7 +8,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'JULIOSM_VERSION', '1.0.0' );
+define( 'JULIOSM_VERSION', '1.0.2' );
 define( 'JULIOSM_DIR', get_template_directory() );
 define( 'JULIOSM_URI', get_template_directory_uri() );
 
@@ -137,7 +137,7 @@ function juliosm_customizer( $wp_customize ) {
 
     // Years of Experience
     $wp_customize->add_setting( 'juliosm_years', array(
-        'default'           => '15+',
+        'default'           => '10+',
         'sanitize_callback' => 'sanitize_text_field',
     ) );
     $wp_customize->add_control( 'juliosm_years', array(
@@ -155,6 +155,71 @@ function juliosm_customizer( $wp_customize ) {
         'label'   => __( 'Foto del Doctor', 'juliosm-main' ),
         'section' => 'juliosm_doctor',
     ) ) );
+
+    // Section: Logos (header + footer override)
+    $wp_customize->add_section( 'juliosm_logos', array(
+        'title'    => __( 'Logos (Header / Footer)', 'juliosm-main' ),
+        'priority' => 25,
+        'description' => __( 'El logo del header se controla desde "Identidad del Sitio". El logo del footer es independiente y puede ser distinto (versión blanca recomendada sobre fondo oscuro).', 'juliosm-main' ),
+    ) );
+
+    // Header logo override (optional — bypasses Site Identity custom logo if set)
+    $wp_customize->add_setting( 'juliosm_header_logo', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'juliosm_header_logo', array(
+        'label'       => __( 'Logo del Header (opcional)', 'juliosm-main' ),
+        'description' => __( 'Si lo dejas vacío, se usa el logo de Identidad del Sitio o el logo color por defecto.', 'juliosm-main' ),
+        'section'     => 'juliosm_logos',
+    ) ) );
+
+    $wp_customize->add_setting( 'juliosm_header_logo_height', array(
+        'default'           => 72,
+        'sanitize_callback' => 'absint',
+    ) );
+    $wp_customize->add_control( 'juliosm_header_logo_height', array(
+        'label'       => __( 'Altura del Logo Header (px)', 'juliosm-main' ),
+        'description' => __( 'Predeterminado: 72. Móvil ajusta a -16. Al hacer scroll: -16.', 'juliosm-main' ),
+        'section'     => 'juliosm_logos',
+        'type'        => 'number',
+        'input_attrs' => array( 'min' => 32, 'max' => 160, 'step' => 2 ),
+    ) );
+
+    // Footer logo override (independent of header)
+    $wp_customize->add_setting( 'juliosm_footer_logo', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'juliosm_footer_logo', array(
+        'label'       => __( 'Logo del Footer (opcional)', 'juliosm-main' ),
+        'description' => __( 'Si lo dejas vacío, se usa logo-white.png. Recomendado: PNG transparente blanco.', 'juliosm-main' ),
+        'section'     => 'juliosm_logos',
+    ) ) );
+
+    $wp_customize->add_setting( 'juliosm_footer_logo_height', array(
+        'default'           => 64,
+        'sanitize_callback' => 'absint',
+    ) );
+    $wp_customize->add_control( 'juliosm_footer_logo_height', array(
+        'label'       => __( 'Altura del Logo Footer (px)', 'juliosm-main' ),
+        'description' => __( 'Predeterminado: 64.', 'juliosm-main' ),
+        'section'     => 'juliosm_logos',
+        'type'        => 'number',
+        'input_attrs' => array( 'min' => 32, 'max' => 160, 'step' => 2 ),
+    ) );
+
+    $wp_customize->add_setting( 'juliosm_footer_logo_invert', array(
+        'default'           => 0,
+        'sanitize_callback' => 'absint',
+    ) );
+    $wp_customize->add_control( 'juliosm_footer_logo_invert', array(
+        'label'       => __( 'Forzar Logo Footer en Blanco (filter invert)', 'juliosm-main' ),
+        'description' => __( 'Activa solo si tu logo del footer es de color y necesitas convertirlo a blanco automáticamente. Si subiste un PNG ya blanco, déjalo en 0.', 'juliosm-main' ),
+        'section'     => 'juliosm_logos',
+        'type'        => 'number',
+        'input_attrs' => array( 'min' => 0, 'max' => 1, 'step' => 1 ),
+    ) );
 
     // Section: Contact Info
     $wp_customize->add_section( 'juliosm_contact', array(
@@ -269,15 +334,65 @@ add_action( 'wp_ajax_nopriv_juliosm_contact', 'juliosm_contact_form' );
 
 /* ─── Helper: Get Logo HTML ─── */
 function juliosm_logo( $context = 'header' ) {
-    if ( has_custom_logo() ) {
-        the_custom_logo();
+    $is_footer = ( $context === 'footer' );
+
+    if ( $is_footer ) {
+        $override = get_theme_mod( 'juliosm_footer_logo', '' );
+        $url      = $override ? $override : get_template_directory_uri() . '/assets/img/logo-white.png';
     } else {
-        $color_class = ( $context === 'footer' ) ? 'logo-white' : '';
-        echo '<a href="' . esc_url( home_url( '/' ) ) . '" class="nav-logo ' . $color_class . '">
-            <span class="logo-fallback">
-                <span class="logo-icon">&#9877;</span>
-                <span class="logo-text">Dr. <span class="gold">Julio Santiago</span></span>
-            </span>
-        </a>';
+        $override = get_theme_mod( 'juliosm_header_logo', '' );
+        if ( $override ) {
+            $url = $override;
+        } elseif ( has_custom_logo() ) {
+            // WP Site Identity custom logo (header only)
+            the_custom_logo();
+            return;
+        } else {
+            $url = get_template_directory_uri() . '/assets/img/logo-color.png';
+        }
+    }
+
+    $cls = $is_footer ? 'nav-logo footer-logo-link' : 'nav-logo header-logo-link';
+    echo '<a href="' . esc_url( home_url( '/' ) ) . '" class="' . esc_attr( $cls ) . '">
+        <img src="' . esc_url( $url ) . '" alt="Logo Dr. Julio Santiago Marcelo" class="site-logo-img">
+    </a>';
+}
+
+/* ─── Inline CSS: logo heights + footer invert (Customizer-driven) ─── */
+function juliosm_logo_inline_css() {
+    $h_h     = absint( get_theme_mod( 'juliosm_header_logo_height', 72 ) );
+    $h_h_sc  = max( 32, $h_h - 16 );
+    $h_h_mob = max( 32, $h_h - 16 );
+    $h_f     = absint( get_theme_mod( 'juliosm_footer_logo_height', 64 ) );
+    $invert  = absint( get_theme_mod( 'juliosm_footer_logo_invert', 0 ) ) ? 'brightness(0) invert(1)' : 'none';
+
+    $css = "
+    .nav-logo img, .navbar .custom-logo { height: {$h_h}px !important; width: auto !important; }
+    .navbar.scrolled .nav-logo img, .navbar.scrolled .custom-logo { height: {$h_h_sc}px !important; }
+    @media (max-width:768px) {
+        .nav-logo img, .navbar .custom-logo { height: {$h_h_mob}px !important; }
+        .navbar.scrolled .nav-logo img, .navbar.scrolled .custom-logo { height: " . max( 32, $h_h_mob - 12 ) . "px !important; }
+    }
+    .footer-brand .nav-logo img,
+    .footer-brand .footer-logo-link img,
+    .footer-brand .custom-logo-link img { height: {$h_f}px !important; width: auto !important; filter: {$invert}; }
+    ";
+    wp_add_inline_style( 'juliosm-style', $css );
+}
+add_action( 'wp_enqueue_scripts', 'juliosm_logo_inline_css', 20 );
+
+/* ─── Security Headers ─── */
+function juliosm_security_headers() {
+    if ( is_admin() ) return;
+    header( 'X-Content-Type-Options: nosniff' );
+    header( 'X-Frame-Options: SAMEORIGIN' );
+    header( 'Referrer-Policy: strict-origin-when-cross-origin' );
+    header( 'Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(self)' );
+    if ( is_ssl() ) {
+        header( 'Strict-Transport-Security: max-age=31536000; includeSubDomains' );
     }
 }
+add_action( 'send_headers', 'juliosm_security_headers' );
+
+/* ─── Harden: disable xmlrpc ─── */
+add_filter( 'xmlrpc_enabled', '__return_false' );

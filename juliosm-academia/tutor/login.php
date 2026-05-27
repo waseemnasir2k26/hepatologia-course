@@ -9,14 +9,14 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 get_header();
 ?>
 
-<div class="login-page-wrap" style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#0D3B3B 0%,#155E5E 100%);padding:2rem;">
+<div class="login-page-wrap" style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#114050 0%,#1A6170 100%);padding:2rem;">
 
   <div class="login-card" style="background:var(--white);border-radius:20px;padding:3rem 2.5rem;max-width:420px;width:100%;box-shadow:0 25px 60px rgba(0,0,0,0.3);">
 
     <div style="text-align:center;margin-bottom:2rem;">
       <span style="font-size:2.5rem;">&#9877;</span>
       <h1 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-top:0.5rem;">
-        Dr. <span style="color:var(--gold);">Julio Santiago</span>
+        Dr. <span style="color:var(--gold);">Julio Santiago Marcelo</span>
       </h1>
       <p style="color:var(--gray-500);font-size:0.85rem;margin-top:0.25rem;">Portal de Alumnos</p>
     </div>

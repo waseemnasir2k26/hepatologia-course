@@ -20,16 +20,13 @@
     <div class="nav-links" id="navLinks">
       <?php if ( is_front_page() ) : ?>
         <a href="#sobre">Sobre Mí</a>
-        <a href="#servicios">Servicios</a>
         <a href="#programa">El Programa</a>
         <a href="#testimonios">Testimonios</a>
-        <a href="#contacto">Contacto</a>
         <a href="#faq">FAQ</a>
       <?php else : ?>
         <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Inicio</a>
-        <a href="<?php echo esc_url( home_url( '/#servicios' ) ); ?>">Servicios</a>
         <a href="<?php echo esc_url( home_url( '/#programa' ) ); ?>">El Programa</a>
-        <a href="<?php echo esc_url( home_url( '/#contacto' ) ); ?>">Contacto</a>
+        <a href="<?php echo esc_url( home_url( '/#faq' ) ); ?>">FAQ</a>
       <?php endif; ?>
       <a href="<?php echo esc_url( get_theme_mod( 'juliosm_portal_url', 'https://portal.juliosantiagomarcelo.com' ) ); ?>" class="nav-cta" target="_blank" rel="noopener">
         Acceder al Curso →

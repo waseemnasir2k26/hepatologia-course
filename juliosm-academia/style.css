@@ -1,10 +1,10 @@
 /*
 Theme Name: JulioSM Academia
-Theme URI: https://portal.juliosantiagomarcelo.com
-Author: SkynetJoe / Waseem Nasir
+Theme URI: https://juliosantiagomarcelo.com
+Author: SkynetLabs / Waseem Nasir
 Author URI: https://www.skynetjoe.com
-Description: Tema WordPress premium para la academia online del Dr. Julio Santiago Marcelo. Plataforma de cursos para pacientes con cirrosis. Integrado con Tutor LMS.
-Version: 1.0.0
+Description: Tema WordPress dual-mode para Dr. Julio Santiago Marcelo. Funciona como (a) landing de ventas Cirrosis 360 y (b) portal de alumnos con Tutor LMS. Auto-detecta modo según plugin Tutor LMS, o forzado vía Customizer.
+Version: 1.2.2
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
@@ -18,17 +18,17 @@ Tags: education, lms, courses, medical, spanish, one-column, custom-logo, custom
    CSS CUSTOM PROPERTIES
    ═══════════════════════════════════════ */
 :root {
-  --primary: #1B7A7A;
-  --primary-dark: #155E5E;
-  --primary-deeper: #0D3B3B;
-  --primary-light: #E8F5F5;
-  --primary-50: #F0FAFA;
+  --primary: #217C8F;
+  --primary-dark: #1A6170;
+  --primary-deeper: #114050;
+  --primary-light: #E4F3F6;
+  --primary-50: #F1F8FA;
   --gold: #D4A84D;
   --gold-hover: #C9963C;
   --gold-light: #F5E6C8;
   --gold-50: #FDF8EF;
-  --sage: #A3C4A8;
-  --sage-light: #D4E6D7;
+  --sage: #94CDAD;
+  --sage-light: #C8E6D4;
   --white: #FFFFFF;
   --cream: #F7F5F0;
   --gray-50: #F9FAFB;
@@ -48,7 +48,7 @@ Tags: education, lms, courses, medical, spanish, one-column, custom-logo, custom
   --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
   --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-  --shadow-primary: 0 8px 25px rgba(27,122,122,0.2);
+  --shadow-primary: 0 8px 25px rgba(33,124,143,0.22);
   --shadow-gold: 0 8px 25px rgba(212,168,77,0.25);
   --radius-sm: 6px;
   --radius: 10px;
@@ -120,7 +120,10 @@ h1,h2,h3,h4 { font-family:'Playfair Display',Georgia,serif; line-height:1.2; col
 .nav-container { max-width:1200px; margin:0 auto; padding:0 2rem; display:flex; align-items:center; justify-content:space-between; }
 .nav-logo { display:flex; align-items:center; gap:.6rem; font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:600; color:var(--white); transition:color .3s; }
 .navbar.scrolled .nav-logo { color:var(--primary-deeper); }
-.nav-logo img { height:40px; width:auto; }
+.nav-logo img { height:72px; width:auto; transition:height .3s var(--ease); }
+.navbar.scrolled .nav-logo img { height:56px; }
+.footer-brand .nav-logo img { height:64px; filter:brightness(0) invert(1); }
+@media (max-width:768px) { .nav-logo img { height:56px; } .navbar.scrolled .nav-logo img { height:44px; } }
 .nav-logo .logo-icon { font-size:1.3rem; }
 .nav-links { display:flex; align-items:center; gap:1.75rem; }
 .nav-links a { font-family:'Inter',sans-serif; font-size:.85rem; font-weight:500; color:rgba(255,255,255,.8); transition:color .3s; position:relative; }
@@ -314,7 +317,7 @@ h1,h2,h3,h4 { font-family:'Playfair Display',Georgia,serif; line-height:1.2; col
    ═══════════════════════════════════════ */
 .section-cta { background:linear-gradient(160deg,var(--primary-dark) 0%,var(--primary-deeper) 100%); padding:5rem 0; text-align:center; }
 .cta-icon { font-size:3rem; margin-bottom:1.5rem; }
-.sticky-cta { position:fixed; bottom:0; left:0; right:0; padding:.75rem 1rem; background:rgba(13,59,59,.95); backdrop-filter:blur(10px); z-index:999; transform:translateY(100%); transition:transform .4s var(--ease); display:none; }
+.sticky-cta { position:fixed; bottom:0; left:0; right:0; padding:.75rem 1rem; background:rgba(17,64,80,.95); backdrop-filter:blur(10px); z-index:999; transform:translateY(100%); transition:transform .4s var(--ease); display:none; }
 .sticky-cta.visible { transform:translateY(0); }
 .btn-sticky { display:block; width:100%; text-align:center; }
 
@@ -412,3 +415,252 @@ body.tutor-course-page .tutor-single-course-sidebar .tutor-course-sidebar-card {
   .payment-icons { gap:.4rem; }
   .payment-icon-card { font-size:.65rem; padding:.3rem .5rem; }
 }
+
+/* ═══════════════════════════════════════
+   ELDERLY-FRIENDLY COURSE UI
+   Larger fonts, huge PDF buttons, simple nav
+   ═══════════════════════════════════════ */
+
+/* Bigger base text on course + lesson pages */
+body.tutor-course-page,
+body.tutor-lesson-page,
+body.tutor-course-page .tutor-course-content-wrap,
+body.tutor-lesson-page .tutor-lesson-content {
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+body.tutor-course-page h1, body.tutor-lesson-page h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
+body.tutor-course-page h2, body.tutor-lesson-page h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); }
+body.tutor-course-page h3, body.tutor-lesson-page h3 { font-size: 1.3rem; }
+
+/* ─── Huge PDF Download Buttons ─── */
+.pdf-big-btn,
+body.tutor-course-page .tutor-attachments a,
+body.tutor-lesson-page .tutor-attachments a,
+.tutor-attachments-wrap a[href$=".pdf"],
+.tutor-course-attachments a {
+  display: flex !important;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.4rem 1.75rem !important;
+  margin: .75rem 0;
+  background: var(--primary) !important;
+  color: #fff !important;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  line-height: 1.3;
+  border: 3px solid var(--primary-dark) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-primary);
+  text-decoration: none !important;
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s;
+}
+.pdf-big-btn:hover,
+body.tutor-course-page .tutor-attachments a:hover,
+body.tutor-lesson-page .tutor-attachments a:hover,
+.tutor-attachments-wrap a[href$=".pdf"]:hover,
+.tutor-course-attachments a:hover {
+  background: var(--primary-dark) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(33,124,143,.35);
+}
+.pdf-big-btn::before,
+body.tutor-course-page .tutor-attachments a::before,
+body.tutor-lesson-page .tutor-attachments a::before,
+.tutor-course-attachments a::before {
+  content: "📄";
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+.pdf-big-btn::after,
+body.tutor-course-page .tutor-attachments a::after,
+body.tutor-lesson-page .tutor-attachments a::after,
+.tutor-course-attachments a::after {
+  content: "↓ Descargar";
+  margin-left: auto;
+  background: var(--sage);
+  color: var(--primary-deeper);
+  padding: .5rem 1rem;
+  border-radius: var(--radius);
+  font-size: .95rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+/* ─── Simple, Large Course Navigation ─── */
+.tutor-course-enrolled-nav,
+.tutor-course-enrolled-nav-container,
+.course-content-area .tutor-course-enrolled-nav {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 2rem 0;
+}
+.tutor-course-enrolled-nav a,
+.tutor-course-enrolled-nav .tutor-btn,
+.tutor-course-enrolled-nav button {
+  flex: 1 1 240px;
+  min-height: 64px;
+  padding: 1.15rem 1.5rem !important;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  border-radius: var(--radius-lg) !important;
+  background: var(--primary) !important;
+  color: #fff !important;
+  border: 2px solid var(--primary-dark) !important;
+  box-shadow: var(--shadow-primary);
+  text-align: center;
+  transition: background .2s;
+}
+.tutor-course-enrolled-nav a:hover,
+.tutor-course-enrolled-nav .tutor-btn:hover,
+.tutor-course-enrolled-nav button:hover {
+  background: var(--primary-dark) !important;
+}
+
+/* Lesson-list rows: taller, clearer */
+.tutor-courses-wrap .tutor-courses,
+.tutor-course-topics-lessons .tutor-courses-topic-body a,
+.tutor-course-topic-body a {
+  padding: 1.1rem 1.25rem !important;
+  font-size: 1.05rem !important;
+  line-height: 1.5;
+  border-bottom: 2px solid var(--primary-light);
+}
+.tutor-course-topic-body a:hover { background: var(--primary-50); }
+
+/* Active / current lesson indicator — very visible */
+.tutor-course-topic-body a.active,
+.tutor-course-topic-body a.is-current {
+  background: var(--sage-light) !important;
+  border-left: 6px solid var(--primary) !important;
+  color: var(--primary-deeper) !important;
+}
+
+/* "Marcar como completado" big button */
+.tutor-complete-lesson-btn,
+button[name="complete_lesson_btn"],
+.tutor-btn-complete {
+  min-height: 64px !important;
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  padding: 1.15rem 2rem !important;
+  border-radius: var(--radius-lg) !important;
+  background: var(--success) !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: 0 8px 22px rgba(5,150,105,.25);
+}
+.tutor-complete-lesson-btn:hover { background: #047857 !important; }
+
+@media(max-width: 640px) {
+  .pdf-big-btn,
+  body.tutor-course-page .tutor-attachments a,
+  body.tutor-lesson-page .tutor-attachments a,
+  .tutor-attachments-wrap a[href$=".pdf"] {
+    font-size: 1.05rem !important;
+    padding: 1.15rem 1.25rem !important;
+    flex-wrap: wrap;
+  }
+  .pdf-big-btn::after,
+  body.tutor-course-page .tutor-attachments a::after,
+  body.tutor-lesson-page .tutor-attachments a::after {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* ─── WhatsApp Float Button ─── */
+.wa-float {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #25D366;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 28px rgba(37,211,102,.45);
+  z-index: 9999;
+  transition: transform .25s ease, box-shadow .25s ease;
+  text-decoration: none;
+}
+.wa-float:hover {
+  transform: scale(1.08);
+  box-shadow: 0 14px 34px rgba(37,211,102,.55);
+}
+.wa-float svg { width: 32px; height: 32px; }
+@media (max-width: 640px) {
+  .wa-float { width: 54px; height: 54px; right: 1rem; bottom: 5rem; }
+  .wa-float svg { width: 28px; height: 28px; }
+}
+
+/* ═══════════════════════════════════════
+   PORTAL MODE — visual distinction from landing
+   ═══════════════════════════════════════ */
+body.site-mode-portal .navbar {
+  background: linear-gradient(160deg, #114050 0%, #1A6170 100%);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+body.site-mode-portal .navbar .nav-links a { color: rgba(255,255,255,0.85); }
+body.site-mode-portal .navbar .nav-links a:hover { color: #D4A84D; }
+body.site-mode-portal .navbar .nav-cta {
+  background: #D4A84D;
+  color: #114050;
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  font-weight: 600;
+}
+body.site-mode-portal .navbar .nav-cta:hover { background: #C9963C; color: #114050; }
+body.site-mode-portal .nav-toggle span { background: #fff; }
+body.site-mode-portal .site-logo-img { filter: none; }
+
+.portal-hero { background: linear-gradient(160deg, #114050 0%, #1A6170 60%, #217C8F 100%); }
+
+/* Portal cards — clickable module/bono tiles */
+.portal-card { display: block; text-decoration: none; color: inherit; transition: transform .2s ease, box-shadow .2s ease; }
+.portal-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(17,64,80,0.18); }
+.portal-card .module-link { display: inline-block; margin-top: 1rem; color: #D4A84D; font-weight: 600; font-size: 0.9rem; }
+
+/* Tutor LMS dashboard embed — clean inset on portal home */
+.tutor-dashboard-embed { background: #fff; border-radius: 16px; padding: 1.5rem; border: 1px solid var(--gray-200); box-shadow: var(--shadow-md); }
+
+/* Login card form (wp_login_form output) */
+.login-card-wrap label { display: block; font-size: 0.85rem; color: var(--gray-700); font-weight: 600; margin-bottom: 0.4rem; }
+.login-card-wrap input[type="text"],
+.login-card-wrap input[type="password"] {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 10px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.login-card-wrap input[type="text"]:focus,
+.login-card-wrap input[type="password"]:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(33,124,143,0.15);
+}
+.login-card-wrap input[type="submit"] {
+  width: 100%;
+  background: #D4A84D;
+  color: #114050;
+  border: none;
+  padding: 0.95rem 1.25rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background .15s ease;
+}
+.login-card-wrap input[type="submit"]:hover { background: #C9963C; }
+.login-card-wrap .login-remember { font-size: 0.85rem; color: var(--gray-600); margin-bottom: 1rem; }
