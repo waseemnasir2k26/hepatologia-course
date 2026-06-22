@@ -7,6 +7,8 @@ get_header();
 
 $portal_url    = esc_url( get_theme_mod( 'juliosm_portal_url', 'https://portal.juliosantiagomarcelo.com' ) );
 $mp_link       = esc_url( get_theme_mod( 'juliosm_mercadopago', 'https://mpago.la/1sXKiM3' ) );
+$precio_lanz   = esc_html( get_theme_mod( 'juliosm_precio_lanz', '247' ) );
+$precio_reg    = esc_html( get_theme_mod( 'juliosm_precio_reg', '297' ) );
 $specialty     = esc_html( get_theme_mod( 'juliosm_specialty', 'Gastroenterólogo' ) );
 $bio           = wp_kses_post( get_theme_mod( 'juliosm_bio', 'El Dr. Julio Santiago Marcelo es un gastroenterólogo con amplia experiencia en el diagnóstico y tratamiento de enfermedades del sistema digestivo y del hígado. Con años de dedicación a sus pacientes, ha desarrollado un programa educativo único para personas que viven con cirrosis hepática.' ) );
 $bio_2         = wp_kses_post( get_theme_mod( 'juliosm_bio_2', 'Su compromiso con la educación del paciente lo llevó a crear este programa, donde explica conceptos médicos complejos en un lenguaje claro y accesible, para que cada familia pueda tomar mejores decisiones sobre su salud.' ) );
@@ -235,11 +237,11 @@ $testimonial_v = esc_attr( get_theme_mod( 'juliosm_testimonial_vimeo', '11821555
       <h3 style="color:var(--white);font-family:'Inter',sans-serif;font-size:1.1rem;font-weight:600;">Programa Completo para Pacientes con Cirrosis</h3>
       <div class="price-amount">
         <span class="price-currency">S/</span>
-        <span class="price-value">247</span>
+        <span class="price-value"><?php echo $precio_lanz; ?></span>
         <span class="price-period">PEN</span>
       </div>
       <p class="price-subtitle">
-        <s style="color:rgba(255,255,255,0.3);">Precio regular S/ 297</s> &nbsp;&bull;&nbsp; Pago único
+        <s style="color:rgba(255,255,255,0.3);">Precio regular S/ <?php echo $precio_reg; ?></s> &nbsp;&bull;&nbsp; Pago único
       </p>
 
       <ul class="price-features">
@@ -535,7 +537,7 @@ $testimonial_v = esc_attr( get_theme_mod( 'juliosm_testimonial_vimeo', '11821555
       Únase al programa del Dr. Julio Santiago Marcelo y comience a cuidar su hígado con la guía de un especialista.
     </p>
     <a href="<?php echo $mp_link; ?>" class="btn btn-gold btn-xl" data-animate="fade-up" data-delay="200" target="_blank" rel="noopener">
-      <span>Inscribirme por S/ 247</span>
+      <span>Inscribirme por S/ <?php echo $precio_lanz; ?></span>
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
   </div>
@@ -544,7 +546,7 @@ $testimonial_v = esc_attr( get_theme_mod( 'juliosm_testimonial_vimeo', '11821555
 <!-- ═══════ STICKY MOBILE CTA ═══════ -->
 <div class="sticky-cta" id="stickyCta">
   <a href="<?php echo $mp_link; ?>" class="btn btn-gold btn-sticky" target="_blank" rel="noopener">
-    Inscribirme — S/ 247 →
+    Inscribirme — S/ <?php echo $precio_lanz; ?> →
   </a>
 </div>
 

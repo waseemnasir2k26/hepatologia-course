@@ -207,6 +207,29 @@ function juliosm_customizer( $wp_customize ) {
         'type'    => 'url',
     ) );
 
+    // Precio de Lanzamiento (editable por el cliente)
+    $wp_customize->add_setting( 'juliosm_precio_lanz', array(
+        'default'           => '247',
+        'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'juliosm_precio_lanz', array(
+        'label'       => __( 'Precio de Lanzamiento (S/)', 'juliosm-main' ),
+        'description' => __( 'Solo el número, sin "S/". Ej: 247', 'juliosm-main' ),
+        'section'     => 'juliosm_course',
+        'type'        => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'juliosm_precio_reg', array(
+        'default'           => '297',
+        'sanitize_callback' => 'sanitize_text_field',
+    ) );
+    $wp_customize->add_control( 'juliosm_precio_reg', array(
+        'label'       => __( 'Precio Regular tachado (S/)', 'juliosm-main' ),
+        'description' => __( 'Solo el número. Ej: 297', 'juliosm-main' ),
+        'section'     => 'juliosm_course',
+        'type'        => 'text',
+    ) );
+
     $wp_customize->add_setting( 'juliosm_testimonial_vimeo', array(
         'default'           => '1182155574',
         'sanitize_callback' => 'sanitize_text_field',

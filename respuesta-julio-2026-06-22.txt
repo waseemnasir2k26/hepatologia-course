@@ -1,0 +1,30 @@
+Hola Julio, todo bien por aquí, gracias.
+
+Excelente trabajo configurando el Access Token de producción y el webhook — y tu diagnóstico es exactamente correcto. Te explico por qué pasa y cómo lo dejamos automático.
+
+POR QUÉ NO SE CREA EL USUARIO SOLO
+Hoy el botón "Inscribirme" abre un enlace de pago fijo de Mercado Pago (mpago.la). Ese tipo de enlace cobra bien, pero NO pide el correo del comprador ni envía una referencia única al portal. Por eso, aunque el webhook responde 200 OK, el portal recibe el aviso de pago pero no sabe a QUIÉN pertenece — y sin correo no puede crear el usuario ni enviar los accesos. No es un error de tu configuración; es la limitación del enlace fijo.
+
+CÓMO LO DEJAMOS AUTOMÁTICO (justo lo que pediste)
+Reemplazamos el enlace fijo por un checkout integrado:
+
+1) Antes de pagar, una pequeña ficha pide Nombre, Email y WhatsApp.
+2) Al continuar, el portal genera el pago en Mercado Pago con esos datos + una referencia única, y lleva al alumno a pagar.
+3) Cuando Mercado Pago confirma el pago (tu webhook), el portal:
+   - crea el usuario,
+   - lo inscribe en el curso (acceso 6 meses),
+   - y le envía automáticamente su correo de acceso.
+
+Resultado: Pago aprobado → usuario creado → alumno inscrito → correo enviado. Cero pasos manuales. Lo dejamos probado de punta a punta antes de tu campaña.
+
+SOBRE EL PRECIO DE LA LANDING
+Lo voy a dejar editable por ti desde el panel: Apariencia → Personalizar → Configuración del Curso → "Precio de Lanzamiento". Cambias el número y se actualiza en toda la página.
+Importante: el MONTO que se cobra hoy está fijo dentro del enlace de Mercado Pago, así que por ahora cambiar el texto de la web NO cambia lo que se cobra. Con el checkout integrado del punto anterior, el precio queda en UN SOLO lugar y se sincroniza automáticamente con el cobro — así no hay riesgo de que la web diga un precio y se cobre otro.
+
+PRÓXIMO PASO
+Esta automatización es un desarrollo adicional (Fase 2). Te paso el alcance y el monto en un mensaje aparte. Para empezar solo necesito confirmar el acceso al portal y que el Access Token de producción ya está cargado (que ya lo hiciste).
+
+Quedo atento, Julio. Lo dejamos redondo antes de lanzar.
+
+Saludos,
+Waseem
