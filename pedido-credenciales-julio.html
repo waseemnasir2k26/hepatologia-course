@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedido de credenciales — Dr. Julio</title>
+<style>
+  :root{ --green:#1f6b54; --green-d:#16503f; --gold:#c9a227; --ink:#1a2b25; --paper:#f6f4ee; --line:#e3ded2; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Inter,system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;padding:32px 16px}
+  .wrap{max-width:720px;margin:0 auto}
+  .top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:18px}
+  .badge{background:var(--green);color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:999px}
+  .btns{display:flex;gap:8px;flex-wrap:wrap}
+  button{cursor:pointer;border:0;border-radius:8px;font-weight:600;font-size:.85rem;padding:10px 16px}
+  .copy{background:var(--gold);color:#3a2e00}
+  .wa{background:#25D366;color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border-radius:8px;font-weight:600;font-size:.85rem}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 8px 30px rgba(22,80,63,.07);overflow:hidden}
+  .card-head{background:linear-gradient(135deg,var(--green),var(--green-d));color:#fff;padding:18px 24px}
+  .card-head h1{font-size:1.1rem}
+  .body{padding:24px 28px}
+  #msg{white-space:pre-wrap;font-size:.96rem;color:#243530}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:8px;opacity:0;transition:.25s;font-size:.85rem}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <span class="badge">Cirrosis 360 · Pedido de credenciales</span>
+    <div class="btns">
+      <button class="copy" onclick="copyMsg()">📋 Copiar mensaje</button>
+      <a class="wa" href="https://wa.me/51917623134" target="_blank" rel="noopener">💬 Abrir WhatsApp</a>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-head"><h1>Para: Dr. Julio Santiago Marcelo · WhatsApp +51 917623134</h1></div>
+    <div class="body">
+<div id="msg">Hola Julio, ya tengo lista la automatización del cobro + inscripción. Para activarla necesito 2 datos de tu lado:
+
+1) MERCADO PAGO — Access Token de PRODUCCIÓN
+Entra a tu cuenta de Mercado Pago → "Tus integraciones" (https://www.mercadopago.com.pe/developers/panel/app) → tu aplicación → Credenciales de producción. Cópiame:
+   • Access Token (empieza con "APP_USR-...")
+   • Y si en la sección Webhooks tienes una "Clave secreta", cópiala también (sirve para validar cada pago).
+
+2) CORREO PARA ENVÍO AUTOMÁTICO (SMTP)
+El portal necesita una cuenta de correo desde la cual enviarle a cada alumno sus accesos. Lo ideal es usar tu correo del dominio (ej. contacto@juliosantiagomarcelo.com). Necesito:
+   • La dirección de correo desde la que enviaremos
+   • Su contraseña
+   • Si tu correo está alojado en Hostinger, con eso me basta. Si usas Gmail u otro, avísame cuál.
+
+Con esos dos datos lo dejo funcionando y hacemos juntos una compra de prueba real antes de lanzar tus anuncios, para que veas el flujo completo: pago → usuario creado → inscrito → correo de acceso enviado.
+
+Por seguridad, si prefieres puedes enviarme la contraseña y el token por separado. Cualquier duda me avisas. ¡Gracias!</div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast">Mensaje copiado ✓</div>
+<script>
+function copyMsg(){const t=document.getElementById('msg').innerText;navigator.clipboard.writeText(t).then(()=>{const e=document.getElementById('toast');e.classList.add('show');setTimeout(()=>e.classList.remove('show'),1800);});}
+</script>
+</body>
+</html>

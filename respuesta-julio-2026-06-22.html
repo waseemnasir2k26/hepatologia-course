@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Respuesta a Dr. Julio — 2026-06-22</title>
+<style>
+  :root{ --green:#1f6b54; --green-d:#16503f; --gold:#c9a227; --ink:#1a2b25; --paper:#f6f4ee; --line:#e3ded2; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Inter,system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;padding:32px 16px}
+  .wrap{max-width:760px;margin:0 auto}
+  .top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:18px}
+  .badge{background:var(--green);color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:999px}
+  .btns{display:flex;gap:8px;flex-wrap:wrap}
+  button{cursor:pointer;border:0;border-radius:8px;font-weight:600;font-size:.85rem;padding:10px 16px;transition:.15s}
+  .copy{background:var(--gold);color:#3a2e00}
+  .copy:hover{filter:brightness(1.06)}
+  .wa{background:#25D366;color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border-radius:8px;font-weight:600;font-size:.85rem}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 8px 30px rgba(22,80,63,.07);overflow:hidden}
+  .card-head{background:linear-gradient(135deg,var(--green),var(--green-d));color:#fff;padding:20px 26px}
+  .card-head h1{font-size:1.15rem;font-weight:700}
+  .card-head p{font-size:.82rem;opacity:.85;margin-top:2px}
+  .body{padding:26px 30px}
+  #msg{white-space:pre-wrap;font-family:'Segoe UI',Inter,sans-serif;font-size:.96rem;color:#243530}
+  .meta{margin-top:18px;font-size:.78rem;color:#7c8a83;border-top:1px dashed var(--line);padding-top:14px}
+  .note{background:#e9f6ef;border:1px solid var(--green);color:var(--green-d);font-size:.82rem;padding:10px 14px;border-radius:8px;margin-bottom:16px}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:8px;opacity:0;transition:.25s;font-size:.85rem}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <span class="badge">Cirrosis 360 · Respuesta cliente</span>
+    <div class="btns">
+      <button class="copy" onclick="copyMsg()">📋 Copiar mensaje</button>
+      <a class="wa" href="https://wa.me/51917623134" target="_blank" rel="noopener">💬 Abrir WhatsApp</a>
+    </div>
+  </div>
+
+  <div class="note">✅ <b>Sin costo adicional</b> — se completa como parte del alcance original. Listo para enviar.</div>
+
+  <div class="card">
+    <div class="card-head">
+      <h1>Para: Dr. Julio Santiago Marcelo</h1>
+      <p>WhatsApp +51 917623134 · 22 jun 2026</p>
+    </div>
+    <div class="body">
+<div id="msg">Hola Julio, todo bien por aquí, gracias.
+
+Excelente trabajo configurando el Access Token de producción y el webhook — y tu diagnóstico es exactamente correcto. Te explico por qué pasaba y cómo ya lo dejo resuelto.
+
+POR QUÉ NO SE CREABA EL USUARIO SOLO
+El botón "Inscribirme" abría un enlace de pago fijo de Mercado Pago (mpago.la). Ese enlace cobra bien, pero no pide el correo del comprador ni envía una referencia única al portal. Por eso, aunque el webhook respondía 200 OK, el portal recibía el aviso de pago pero no sabía a QUIÉN pertenecía — y sin correo no podía crear el usuario ni enviar los accesos. No fue un error de tu configuración; era la limitación del enlace fijo.
+
+CÓMO QUEDA AUTOMÁTICO (lo que pediste)
+Reemplacé el enlace fijo por un checkout integrado:
+
+1) Antes de pagar, una ficha pide Nombre, Email y WhatsApp.
+2) El portal genera el pago en Mercado Pago con esos datos + una referencia única y lleva al alumno a pagar.
+3) Cuando Mercado Pago confirma el pago, el portal automáticamente:
+   - crea el usuario,
+   - lo inscribe en el curso (acceso 6 meses),
+   - y le envía su correo de acceso.
+
+Resultado: Pago aprobado → usuario creado → alumno inscrito → correo enviado. Cero pasos manuales.
+
+Esto formaba parte del alcance original del proyecto (pasarela de pago + alta de usuario + correo automático), así que lo completo sin costo adicional. Lo dejo instalado y lo probamos juntos de punta a punta antes de tu campaña.
+
+SOBRE EL PRECIO DE LA LANDING
+Lo dejé editable por ti desde el panel: Apariencia → Personalizar → Configuración del Curso → "Precio de Lanzamiento". Cambias el número y se actualiza en toda la página. Con el nuevo checkout, ese mismo precio es el que se cobra — queda todo sincronizado, sin riesgo de que la web diga un precio y se cobre otro.
+
+PRÓXIMO PASO
+Coordinamos un momento para activarlo en tu portal y hacer un pago de prueba real juntos, para que veas el flujo completo funcionando antes de lanzar los anuncios.
+
+Una cosa más: ya en campaña, si quieres te puedo dar soporte mensual (respaldos, subida de módulos/clases, soporte a alumnos y reportes de ventas) para que tú solo te enfoques en enseñar. Lo dejamos para cuando empiecen a entrar inscripciones — sin apuro.
+
+Quedo atento, Julio. Lo dejamos redondo.
+
+Saludos,
+Waseem</div>
+      <div class="meta">Archivo: respuesta-julio-2026-06-22.html · El botón "Copiar mensaje" copia solo el texto (sin formato), listo para pegar en WhatsApp.</div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Mensaje copiado ✓</div>
+<script>
+function copyMsg(){
+  const t = document.getElementById('msg').innerText;
+  navigator.clipboard.writeText(t).then(()=>{
+    const el=document.getElementById('toast');
+    el.classList.add('show');
+    setTimeout(()=>el.classList.remove('show'),1800);
+  });
+}
+</script>
+</body>
+</html>
