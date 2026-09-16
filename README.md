@@ -2,6 +2,10 @@
 
 **Plataforma de Educacion Medica — Dr. Julio Santiago Marcelo**
 
+## Status
+
+Last reviewed: September 2026 · release v2026.09
+
 Medical education course platform for a Peruvian hepatologist specializing in cirrhosis patient care. Bilingual Spanish interface with student portal, video lessons, and payment integration.
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-hepatologia--course.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://hepatologia-course.vercel.app)
