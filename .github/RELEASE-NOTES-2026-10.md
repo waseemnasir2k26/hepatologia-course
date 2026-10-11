@@ -1,0 +1,4 @@
+- hepatologia-course is a public Spanish-language medical education demo for a hepatologist, containing a static HTML/CSS/JS course site and two WordPress themes (juliosm-main, juliosm-academia) with prebuilt ZIPs.
+- Current state: last functional commit was 2026-04-15 (ZIPs rebuilt to fix a blank homepage); no code changes since.
+- Reviewed October 2026: the README live-demo URLs (hepatologia-course.vercel.app and /portal.html) and skynetjoe.com returned HTTP 200.
+- Known gaps: Mercado Pago checkout is described as ready for integration, not integrated; the committed ZIPs can drift from their sources; no LICENSE at repo root. Theme Version headers were left at 1.0.0 to match the packaged ZIPs.
